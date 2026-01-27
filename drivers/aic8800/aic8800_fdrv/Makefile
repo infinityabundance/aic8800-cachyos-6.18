@@ -39,6 +39,13 @@ $(MODULE_NAME)-y := \
     rwnx_radar.o \
     aic_br_ext.o
 
+
+ifeq ($(CONFIG_BR_SUPPORT), y)
+  ccflags-y += -DCONFIG_BR_SUPPORT
+  $(MODULE_NAME)-y += aic_br_ext.o
+endif
+
+
 # Search paths for headers
 ccflags-y += -I$(src) -I$(src)/../aic_load_fw
 
