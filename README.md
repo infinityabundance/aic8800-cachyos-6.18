@@ -119,7 +119,8 @@ sudo pacman -S base-devel linux-cachyos-headers usb_modeswitch
 
 ---
 
-## 🚀 Installation
+## 🚀 Installation (DKMS)
+
 ### 1. Install Dependencies
 
 Before installing the driver, you must ensure you have the kernel headers and DKMS installed. For CachyOS, run:
