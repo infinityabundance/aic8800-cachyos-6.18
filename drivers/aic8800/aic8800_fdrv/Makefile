@@ -46,12 +46,20 @@ $(MODULE_NAME)-y := \
 	aicwf_compat_8800dc.o \
     rwnx_radar.o
 	aic_vendor.o
+	aicwf_rx_prealloc.o
 
-# Conditional Bridge Support logic
-# This correctly adds the flag and the file only if enabled 
+# 1. Bridge Support (NAT25 logic)
 ifeq ($(CONFIG_BR_SUPPORT), y)
   ccflags-y += -DCONFIG_BR_SUPPORT
   $(MODULE_NAME)-y += aic_br_ext.o
+endif
+
+# 2. RX Prealloc Support (Performance/Memory management)
+# We enable this by default for CachyOS performance
+CONFIG_PREALLOC_RX_SKB = y
+ifeq ($(CONFIG_PREALLOC_RX_SKB), y)
+  ccflags-y += -DCONFIG_PREALLOC_RX_SKB
+  $(MODULE_NAME)-y += aicwf_rx_prealloc.o
 endif
 
 # Search paths for headers
