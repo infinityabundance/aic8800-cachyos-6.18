@@ -9,5 +9,8 @@ config AIC_LOADFW_SUPPORT
 	  This enables the command management and firmware loading 
 	  logic defined in aicbluetooth_cmds.h/c.
 
+	  This enables the firmware loading module and the 
+	  AICWFDBG diagnostic logging system.
+
 	  If you are building this for CachyOS or standard Linux, say M here.
 	  This will create the 'aic_load_fw.ko' module.
