@@ -3,18 +3,18 @@
 BASE_DIR=$(pwd)
 
 echo "Step 1: Configuring Udev rules..."
-# Fixed: No longer looks in /usr/src/tenda/ [cite: 4, 13]
+# Fixed: Dynamic pathing replaces /usr/src/tenda/ [cite: 4, 13]
 cp "$BASE_DIR/aic.rules" /etc/udev/rules.d/
 udevadm control --reload
 udevadm trigger
 
-# Handle the virtual disk if it exists [cite: 5]
+# Handle the virtual disk if it exists [cite: 5, 13]
 if [ -L /dev/aicudisk ]; then
     eject /dev/aicudisk
 fi
 
 echo "Step 2: Installing Firmware..."
-# Fixed: Dynamic pathing to local 'fw' folder 
+# Fixed: Dynamic pathing to local 'fw' folder [cite: 5]
 mkdir -p /lib/firmware/aic8800DC
 cp -rf "$BASE_DIR/fw/aic8800DC/"* /lib/firmware/aic8800DC/
 
@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Load modules [cite: 8, 9]
+# Load modules using the compiled files [cite: 8, 9]
 modprobe cfg80211
 insmod "$BASE_DIR/drivers/aic8800/aic_load_fw/aic_load_fw.ko"
 insmod "$BASE_DIR/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.ko"
