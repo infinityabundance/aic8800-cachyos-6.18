@@ -84,14 +84,58 @@ Manual Eject: If your device is plugged in but the Wi-Fi isn't showing up, find 
 Bash
 
 ### Replace 'sr0' with your actual virtual CD-ROM device if different
+```
 sudo eject /dev/sr0
-
+```
 Automated Eject (Recommended): To handle this automatically every time you plug it in, install the usb_modeswitch package:
-Bash
 
+```
 sudo pacman -S usb_modeswitch
-
+```
 Most modern distributions will then handle the switch automatically using udev rules.
+
+---
+
+## 🔍 Troubleshooting & USB Mode Switch
+
+Many AIC8800 devices initially mount as a Virtual CD-ROM (Storage Mode) to provide Windows drivers. Linux will not see the Wi-Fi card until the device is "switched."
+1. Identify the Mode
+
+Check your Device ID by running:
+
+```
+lsusb | grep -iE "a69c|368b"
+```
+Mode	ID (VID:PID)	Status
+Storage	a69c:5721	Stuck. Wi-Fi is hidden.
+Wi-Fi	368b:8d81	Ready. Driver should load.
+
+2. Manual Fix (Eject)
+
+If stuck in Storage Mode, eject the virtual disk:
+
+```
+sudo eject /dev/sr0
+```
+
+3. Automated Fix (Recommended)
+
+Create a udev rule to handle this automatically whenever you plug the device in:
+
+```
+echo 'ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="a69c", ATTR{idProduct}=="5721", RUN+="/usr/bin/eject %k"' | sudo tee /etc/udev/rules.d/99-aic8800.rules
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+4. Verify Firmware & Driver
+
+Check the kernel logs to ensure the firmware loaded correctly:
+
+```
+dmesg | grep -i "aic8"
+```
+Success: Should show Firmware download success.
+
+Error -2: Means you forgot to copy the files to /usr/lib/firmware/aic8800/.
 
 ---
 
