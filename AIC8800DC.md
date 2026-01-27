@@ -137,54 +137,51 @@ graph TD
     style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
     style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
+### Figure 2-1 AIC8800DC Block Diagram
 ```mermaid
 graph TD
-    %% Top Row (Left to Right)
-    subgraph Top ["Top Pins"]
-        direction LR
-        p36[36: RF_ANT] --- p35[35: PWRKEY] --- p34[34: GPIOA9] --- p33[33: VDD33_PA] --- p32[32: AVDD] --- p31[31: V_RF] --- p30[30: GPIOA8] --- p29[29: SW1] --- p28[28: SW2] --- p27[27: VDD33] --- p26[26: GPIOB2]
+    subgraph AIC8800DC ["AIC8800DC"]
+        direction TB
+        
+        %% Column 1
+        BTDM["BTDM 5.2"]
+        WIFI6["WIFI 6"]
+        PMU["PMU"]
+        
+        %% Column 2
+        ROM["ROM"]
+        WLAN["WLAN CPU"]
+        SEC["Security Acc"]
+        DMA["DMA"]
+        SRAM["SRAM"]
+        
+        %% Column 3
+        USB["USB 2.0"]
+        SDIO["SDIO"]
+        UART["UART"]
+        ADC["ADC"]
+        GPIO["GPIO"]
+
+        %% Define Layout/Alignment
+        BTDM --- ROM --- USB
+        WIFI6 --- WLAN --- SDIO
+        WIFI6 --- SEC --- UART
+        WIFI6 --- DMA --- ADC
+        PMU --- SRAM --- GPIO
     end
-
-    %% Middle Section
-    subgraph Mid [" "]
-        direction LR
-        %% Left Column (Top to Bottom)
-        subgraph Left ["Left Pins"]
-            direction TB
-            p1[01: RF_IND] --- p2[02: GPIOA7] --- p3[03: GPIOA0] --- p4[04: GPIOA1] --- p5[05: GPIOA2] --- p6[06: GPIOA3] --- p7[07: GPIOA4]
-        end
-
-        Center((EPAD / GND))
-
-        %% Right Column (Top to Bottom)
-        subgraph Right ["Right Pins"]
-            direction TB
-            p25[25: V_CORE] --- p24[24: VIO] --- p23[23: GPIOA10] --- p22[22: GPIOA11] --- p21[21: GPIOA12] --- p20[20: GPIOA13] --- p19[19: GPIOA14]
-        end
-    end
-
-    %% Bottom Row (Left to Right)
-    subgraph Bottom ["Bottom Pins"]
-        direction LR
-        p8[08: GPIOA5] --- p9[09: GPIOA6] --- p10[10: XTAL1] --- p11[11: XTAL2] --- p12[12: AVDD18] --- p13[13: GPIOB3] --- p14[14: GPIOB0] --- p15[15: GPIOB1] --- p16[16: USB_DM] --- p17[17: USB_DP] --- p18[18: GPIOA15]
-    end
-
-    %% Invisible Structural Links to Force Square Shape
-    p36 ~~~ p1
-    p26 ~~~ p25
-    p1 ~~~ p8
-    p25 ~~~ p19
-    p7 ~~~ p8
-    p19 ~~~ p18
 
     %% Styling
-    style Center fill:#BDD7EE,stroke:#2F5597,stroke-dasharray: 5 5
-    style Top fill:none,stroke:none
-    style Mid fill:none,stroke:none
-    style Bottom fill:none,stroke:none
-    style Left fill:none,stroke:none
-    style Right fill:none,stroke:none
-
-    classDef pin fill:#fff,stroke:#333,stroke-width:1px,font-size:10px;
-    class p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30,p31,p32,p33,p34,p35,p36 pin;
+    style BTDM fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style WIFI6 fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style PMU fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style ROM fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style WLAN fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style SEC fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style DMA fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style SRAM fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style USB fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style SDIO fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style UART fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
