@@ -3,7 +3,7 @@ CONFIG_AIC8800_WLAN_SUPPORT = m
 MODULE_NAME = aic8800_fdrv
 CONFIG_COUNTRY_CODE = "00"
 
-# Features enabled for CachyOS/PC [cite: 1]
+# Features enabled for CachyOS/PC
 CONFIG_START_FROM_BOOTROM = y
 CONFIG_VRF_DCDC_MODE = y
 CONFIG_ROM_PATCH_EN ?= y
@@ -26,6 +26,7 @@ $(MODULE_NAME)-y := rwnx_msg_tx.o rwnx_msg_rx.o rwnx_utils.o rwnx_cmds.o \
 ccflags-y += -I$(src)/. -DCONFIG_RWNX_FULLMAC -DAICWF_USB_SUPPORT -DCONFIG_COEX
 ccflags-y += -DDEFAULT_COUNTRY_CODE="\"$(CONFIG_COUNTRY_CODE)\""
 
+# Fixed: Uses current system kernel headers instead of hardcoded paths 
 KDIR  := /lib/modules/$(shell uname -r)/build
 PWD   := $(shell pwd)
 ARCH  ?= $(shell uname -m | sed -e s/i.86/i386/ -e s/armv.l/arm/ -e s/aarch64/arm64/)
