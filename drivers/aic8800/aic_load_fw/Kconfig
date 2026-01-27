@@ -15,5 +15,9 @@ config AIC_LOADFW_SUPPORT
 	  This enables the firmware loader and the high-performance 
 	  RX pre-allocation memory system.
 
+	  This option enables the firmware loading module. 
+	  It includes high-performance RX buffer pre-allocation 
+	  defined in aicwf_rx_prealloc.h.
+
 	  If you are building this for CachyOS or standard Linux, say M here.
 	  This will create the 'aic_load_fw.ko' module.
