@@ -17,6 +17,50 @@ This repository solves the common "Firmware not found" and "USB Mass Storage" is
 
 ---
 
+## 📂 Module: aic_load_fw
+
+Path: drivers/aic8800/aic_load_fw/
+
+This module is the "Loader" for the AIC8800 series. Its primary purpose is to initialize the USB bus, verify the integrity of the firmware binaries, and upload the necessary patches and configurations to the chip's internal memory before the main Wi-Fi driver takes over.
+
+### 🛠 Core Logic & Initialization
+
+    aic_bluetooth_main.c: The entry point for the kernel module. It handles module parameters (like debug levels), registers the USB driver with the kernel, and orchestrates the handover between Wi-Fi and Bluetooth initialization.
+
+    aic_compat_8800d80.c / .h: The hardware abstraction layer. It defines specific offsets, filenames, and register values that differ between chip revisions (e.g., 8800DC vs. 8800D80).
+
+    rwnx_version_gen.h: Automatically generated header containing the driver version, build date, and RivieraWaves (RW) stack revision.
+
+### 📡 Bus & Communication Layer
+
+    aicwf_usb.c / .h: The physical transport layer. It manages USB Request Blocks (URBs), handles device plugging/unplugging (enumeration), and implements power management (suspend/resume) for the USB interface.
+
+    aic_txrxif.c / .h: The Bus Transmission/Reception Interface. It provides a generic API for sending management frames and data packets over the USB bus, including a priority-based frame queuing system.
+
+    aicbluetooth_cmds.c / .h: Implements the RivieraWaves command protocol. This is used to send low-level "Memory Write" and "Start App" requests to the chip's internal processor during the boot phase.
+
+### ⚡ Performance & Memory Optimization
+
+    aicwf_rx_prealloc.c / .h: Implements a high-performance RX buffer pool. By pre-allocating memory for incoming packets at startup, it reduces CPU overhead and prevents dropped packets during high-speed data transfers.
+
+    aicwf_txq_prealloc.c / .h: Similar to the RX pool, this manages pre-allocated memory for the transmission queues to ensure consistent latency and system stability under heavy load.
+
+### 🔍 Utilities & Diagnostics
+
+    aicbluetooth.c / .h: Contains the logic for parsing firmware "Patch Tables." It reads the .bin files from /lib/firmware/ and determines which specific segments need to be flashed to the hardware.
+
+    md5.c / .h: Provides MD5 checksum verification. It ensures that the firmware binaries loaded from the disk are not corrupted before they are pushed to the chip.
+
+    aicwf_debug.h: The diagnostic engine. It defines the AICWFDBG macros and various log levels (INFO, ERROR, TRACE) used to troubleshoot the driver via dmesg.
+
+### 🏗 Integration
+
+    Makefile: The build script configured for generic Linux environments. It compiles the above files into aic_load_fw.ko.
+
+    Kconfig: The configuration menu file that allows the loader to be toggled as a module (<M>) or built into the kernel (<*>).
+
+---
+
 ## 🛠 Prerequisites
 
 Ensure you have your kernel headers and the `usb_modeswitch` utility installed:
