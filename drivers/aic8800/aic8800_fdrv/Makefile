@@ -53,6 +53,7 @@ $(MODULE_NAME)-y := \
 	aicwf_compat_8800dc.o \
     rwnx_radar.o
 	aic_vendor.o
+	rwnx_bfmer.o \
 	
 
 # --- Feature: RX Prealloc (Performance) ---
