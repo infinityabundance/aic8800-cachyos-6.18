@@ -16,7 +16,11 @@ AIC8800 Wi-Fi Driver for CachyOS &amp; Arch Linux
 
 High-performance Linux driver for the **AIC8800DC/DW** chipset, specifically patched and verified for **Linux Kernel 6.18-cachyos** and newer.
 
-The AIC8800 is often sold under the name Fenvi Wifi 6 AX286 USB, as well as many other names (Tenda W311MI V6, BrosTrend AX5, etc.)
+The AIC8800 is often sold under the name Fenvi Wifi 6 AX286 USB, as well as many other names (COMFAST CF-940AX, Tenda W311MI V6, Tenda U11 V1, Tenda U2 v5, BrosTrend AX5, TP-LINK Archer TX1U Nano etc.)
+
+https://wikidevi.wi-cat.ru/AIC
+
+[https://wikidevi.wi-cat.ru/AIC](https://wikidevi.wi-cat.ru/AIC)
 
 [AIC8800-based WiFi 6 AX300 USB adapter sells for less than $3](https://www.cnx-software.com/2024/06/21/aic8800-cheap-wifi-6-ax300-usb-adapter/)
 
