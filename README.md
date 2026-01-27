@@ -119,36 +119,36 @@ sudo pacman -S base-devel linux-cachyos-headers usb_modeswitch
 
 ---
 
-## 🚀 Full Installation Workflow
+## 🚀 Installation
+### 1. Install Dependencies
 
-Copy and paste the following block to set up the firmware, build the driver, install the kernel module, and configure the automatic USB mode-switch rule:
-
-### 1. Setup Firmware Directory
-```
-sudo mkdir -p /aic8800DC
-sudo cp fw/* /aic8800DC/
-```
-
-### 2. Build the Driver
-```
-cd drivers/aic8800/aic8800_fdrv
-make -j$(nproc)
-```
-### 3. Install Module and Update Dependencies
-```
-sudo make install
-sudo depmod -a
-```
-
-### 4. Create Udev Rule for Automatic Mode Switching (CD-ROM to Wi-Fi)
+Before installing the driver, you must ensure you have the kernel headers and DKMS installed. For CachyOS, run:
 
 ```
-echo 'ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="a69c", ATTR{idProduct}=="5721", RUN+="/usr/bin/usb_modeswitch -v a69c -p 5721 -K"' | sudo tee /etc/udev/rules.d/99-aic8800.rules
+sudo pacman -S dkms linux-cachyos-headers
 ```
-### 5. Load the Driver
+    Note: If you are using a different kernel (like linux-cachyos-lts or linux-cachyos-bore), install the matching headers package (e.g., linux-cachyos-lts-headers).
+
+### 2. Install the Driver
+
+Use the provided automation script to register the driver with DKMS. This ensures the driver is automatically rebuilt whenever your kernel updates.
+
+```
+git clone https://github.com/infinityabundance/aic8800-cachyos-6.18.git
+cd aic8800-cachyos-6.18
+chmod +x install.sh
+sudo ./install.sh
+```
+
+### 3. Load the Driver
+
+After installation, you can load the module immediately without rebooting:
+
 ```
 sudo modprobe aic8800_fdrv
 ```
+
+
 ---
 
 ## 🚦 Post-Installation
