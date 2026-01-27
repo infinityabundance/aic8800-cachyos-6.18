@@ -21,9 +21,9 @@ pkgver() {
 package() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Install Firmware
-  install -dm755 "${pkgdir}/usr/lib/firmware/aic8800DC"
-  install -m644 firmware/*.bin "${pkgdir}/usr/lib/firmware/aic8800DC/"
+  # 1. Install Firmware to the standard path the driver expects
+  install -dm755 "${pkgdir}/usr/lib/firmware/aic8800"
+  install -m644 firmware/*.bin "${pkgdir}/usr/lib/firmware/aic8800/"
 
   # 2. Setup DKMS Source Tree
   _destdir="${pkgdir}/usr/src/aic8800-cachyos-${pkgver}"
