@@ -1,53 +1,41 @@
 #!/bin/bash
-Main_version=`uname -r |awk -F'.' '{print $1}'`
-Minor_version=`uname -r |awk -F'.' '{print $2}'`
-cp /usr/src/tenda/aic8800/aic.rules /etc/udev/rules.d
-udevadm trigger
-udevadm control --reload
-echo "udev done"
+
+# Dynamically set the base directory to wherever the script is located
+BASE_DIR=$(pwd)
+FW_SRC="$BASE_DIR/fw/aic8800DC"
+DRV_DIR="$BASE_DIR/drivers/aic8800"
+TEST_DIR="$BASE_DIR/aicrf_test"
+
+echo "Step 1: Configuring Udev rules..."
+cp "$BASE_DIR/aic.rules" /etc/udev/rules.d/ 2>/dev/null
+udevadm control --reload && udevadm trigger
+
+# Handle the virtual disk if it exists
 if [ -L /dev/aicudisk ]; then
-echo "device exist"
-eject /dev/aicudisk
-else
-echo "device not exist"
+    eject /dev/aicudisk
 fi
-cd /usr/src/tenda/aic8800/fw/
-rm -rf /lib/firmware/aic8800DC
-cp -rf /usr/src/tenda/aic8800/fw/aic8800DC /lib/firmware/
-echo "cp fw done"
-cd /usr/src/tenda/aic8800/drivers/aic8800/
-make
+
+echo "Step 2: Installing Firmware..."
+mkdir -p /lib/firmware/aic8800DC
+cp -rf "$FW_SRC/"* /lib/firmware/aic8800DC/
+
+echo "Step 3: Building and Installing Drivers..."
+cd "$DRV_DIR"
+make && make install
 if [ $? -ne 0 ]; then
-    echo "make failed, install aic8800 wifi drvier failed"
+    echo "Driver build failed."
     exit 1
 fi
-make install
-if [ $? -ne 0 ]; then
-    echo "make install failed, install aic8800 wifi driver failed"
-    exit 1
-fi
+
+# Load dependencies and modules
 modprobe cfg80211
-insmod /usr/src/tenda/aic8800/drivers/aic8800/aic_load_fw/aic_load_fw.ko
-if [ $? -ne 0 ]; then
-    echo "insmode aic_load_fw failed, install aic8800 wifi driver failed"
-    exit 1
-fi
-insmod /usr/src/tenda/aic8800/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.ko
-if [ $? -ne 0 ]; then
-    echo "insmod aic8800_fdrv failed, install aic8800 wifi drvier failed"
-    exit 1
-fi
-echo "insmod done"
-cd /usr/src/tenda/aic8800/aicrf_test/
-make
-if [ $? -ne 0 ]; then
-    echo "make failed, install aic8800 wifi driver failed"
-    exit 1
-fi
-make install
-if [ $? -ne 0 ]; then
-    echo "make install failed, install aic8800 wifi driver failed"
-    exit 1
-fi
-echo "Install aic8800 wifi driver successful!!!!!"
+# Use modprobe first, fallback to relative insmod if not yet in depmod path
+modprobe aic_load_fw 2>/dev/null || insmod "$DRV_DIR/aic_load_fw/aic_load_fw.ko"
+modprobe aic8800_fdrv 2>/dev/null || insmod "$DRV_DIR/aic8800_fdrv/aic8800_fdrv.ko"
+
+echo "Step 4: Building RF Test tools..."
+cd "$TEST_DIR"
+make && make install
+
+echo "Installation complete!"
 exit 0
