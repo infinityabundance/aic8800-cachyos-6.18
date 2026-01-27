@@ -22,5 +22,8 @@ config AIC_LOADFW_SUPPORT
 	  This enables the firmware loader with TX/RX pre-allocation 
 	  optimizations for better performance on Linux.
 
+	  Enables the firmware loader with TX queue pre-allocation 
+	  optimizations (aicwf_txq_prealloc.h).
+
 	  If you are building this for CachyOS or standard Linux, say M here.
 	  This will create the 'aic_load_fw.ko' module.
