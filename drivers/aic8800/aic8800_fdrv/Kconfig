@@ -1,36 +1,43 @@
-config AIC8800_WLAN_SUPPORT
-	tristate "AIC8800 wlan Support"
-	---help---
-	  This is support for aic wifi driver.
+# drivers/aic8800/aic8800_fdrv/Kconfig
 
-#choice
-#        depends on AIC8800_WLAN_SUPPORT
-#        prompt "Select 8800 support platform"
-#
-#        config PLATFORM_ROCHCHIP
-#                bool "PLATFORM_ROCHCHIP"
-#                depends on AIC8800_WLAN_SUPPORT
-#
-#	config PLATFORM_ALLWINNER
-#                bool "PLATFORM_ALLWINNER"
-#                depends on AIC8800_WLAN_SUPPORT
-#
-#        config PLATFORM_AMLOGIC
-#                bool "PLATFORM_AMLOGIC"
-#                depends on AIC8800_WLAN_SUPPORT
-#
-#        config PLATFORM_UBUNTU
-#                bool "PLATFORM_UBUNTU"
-#                depends on AIC8800_WLAN_SUPPORT
-#
-#endchoice
-#
-#config USE_5G
-#	bool "AIC8800 force enable 5G"
-#        ---help---
-#          This is parameter that force enable 5G.
-#
-#config HE_FOR_OLD_KERNEL
-#	bool "AIC8800 support AX for old kernel"
-#        ---help---
-#          This is parameter that enable AX for old kernel.
+config AIC8800_WLAN_SUPPORT
+	tristate "AIC8800 Wi-Fi 6 (802.11ax) Support"
+	depends on MAC80211 && CFG80211 && USB
+	select AIC_LOADFW_SUPPORT
+	default m
+	help
+	  This is the main driver for AIC8800 series USB Wi-Fi chips.
+	  It supports IEEE 802.11a/b/g/n/ac/ax (Wi-Fi 6) and 2.4GHz/5GHz 
+	  dual-band operation.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called aic8800_fdrv.
+
+if AIC8800_WLAN_SUPPORT
+
+config AIC8800_HE_SUPPORT
+	bool "Enable Wi-Fi 6 (802.11ax) High Efficiency"
+	default y
+	help
+	  Enables High Efficiency (HE) features for 802.11ax. 
+	  This is required to achieve Wi-Fi 6 speeds. Turn this off 
+	  only if you encounter compatibility issues with specific 
+	  access points.
+
+config AIC_BR_SUPPORT
+	bool "Enable Bridge Extension (NAT25) Support"
+	default y
+	help
+	  Enable this if you intend to use the Wi-Fi interface as part 
+	  of a Linux software bridge (e.g., for HostAPD hotspots or 
+	  network repeaters). This enables the NAT25 L2-translation 
+	  logic in aic_br_ext.c.
+
+config AIC8800_FORCE_5G
+	bool "Force enable 5GHz Band"
+	default n
+	help
+	  Forces the driver to enable 5GHz channels regardless of 
+	  initial regulatory domain data. Use this with caution.
+
+endif # AIC8800_WLAN_SUPPORT
