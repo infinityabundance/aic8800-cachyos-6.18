@@ -37,6 +37,7 @@ $(MODULE_NAME)-y := \
     rwnx_vendor_cmd.o \
     rwnx_bfmer.o \
 	aicwf_compat_8800d80.o
+	aicwf_compat_8800dc.o \
     rwnx_radar.o
 	aic_vendor.o
 
