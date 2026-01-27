@@ -17,7 +17,7 @@ CONFIG_BR_SUPPORT = y
 # -----------------------------
 
 # --- SDIO TOGGLE ---
-CONFIG_AIC8800_SDIO_SUPPORT = n # Set to 'y' for SDIO-based modules
+#CONFIG_AIC8800_SDIO_SUPPORT = n # Set to 'y' for SDIO-based modules
 #ifeq ($(CONFIG_AIC8800_SDIO_SUPPORT), y)
 #ccflags-y += -DCONFIG_SDIO_SUPPORT
 #$(MODULE_NAME)-y += aicwf_sdio.o
