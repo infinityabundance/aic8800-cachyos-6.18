@@ -137,61 +137,32 @@ graph TD
     style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
     style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
-```
+
 graph TD
-    subgraph Chip ["AIC8800DC (QFN36)"]
-        direction TB
+    %% Top Row
+    P36[36: RF_ANT] --- P35[35: PWRKEY] --- P34[34: GPIOA9] --- P33[33: VDD33_PA] --- P32[32: AVDD] --- P31[31: V_RF] --- P30[30: GPIOA8] --- P29[29: SW1] --- P28[28: SW2] --- P27[27: VDD33] --- P26[26: GPIOB2]
 
-        %% Top Pins
-        subgraph Top [" "]
-            p36[36: RF_ANT] --- p35[35: PWRKEY] --- p34[34: GPIOA9] --- p33[33: VDD33_PA] --- p32[32: AVDD] --- p31[31: V_RF] --- p30[30: GPIOA8] --- p29[29: SW1] --- p28[28: SW2] --- p27[27: VDD33] --- p26[26: GPIOB2]
-        end
+    %% Vertical side alignments to simulate the square
+    P36 --- P1[01: RF_IND]
+    P26 --- P25[25: V_CORE]
 
-        %% Middle Section (Left Pins | Die | Right Pins)
-        subgraph Mid [" "]
-            direction LR
-            subgraph LeftPins [" "]
-                direction TB
-                p1[1: RF_IND]
-                p2[2: GPIOA7]
-                p3[3: GPIOA0]
-                p4[4: GPIOA1]
-                p5[5: GPIOA2]
-                p6[6: GPIOA3]
-                p7[7: GPIOA4]
-            end
+    %% Left Column
+    P1 --- P2[02: GPIOA7] --- P3[03: GPIOA0] --- P4[04: GPIOA1] --- P5[05: GPIOA2] --- P6[06: GPIOA3] --- P7[07: GPIOA4]
 
-            Center[("EPAD / GND")]
+    %% Right Column
+    P25 --- P24[24: VIO] --- P23[23: GPIOA10] --- P22[22: GPIOA11] --- P21[21: GPIOA12] --- P20[20: GPIOA13] --- P19[19: GPIOA14]
 
-            subgraph RightPins [" "]
-                direction TB
-                p25[25: V_CORE]
-                p24[24: VIO]
-                p23[23: GPIOA10]
-                p22[22: GPIOA11]
-                p21[21: GPIOA12]
-                p20[20: GPIOA13]
-                p19[19: GPIOA14]
-            end
-        end
-
-        %% Bottom Pins
-        subgraph Bottom [" "]
-            p8[8: GPIOA5] --- p9[9: GPIOA6] --- p10[10: XTAL1] --- p11[11: XTAL2] --- p12[12: AVDD18] --- p13[13: GPIOB3] --- p14[14: GPIOB0] --- p15[15: GPIOB1] --- p16[16: USB_DM] --- p17[17: USB_DP] --- p18[18: GPIOA15]
-        end
-
-        Top --- Mid --- Bottom
-    end
-
-    %% Styling
-    style Chip fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style Center fill:#ccc,stroke:#666,stroke-dasharray: 5 5
-    style Top stroke:none,fill:none
-    style Mid stroke:none,fill:none
-    style Bottom stroke:none,fill:none
+    %% Bottom Row connections
+    P7 --- P8[08: GPIOA5]
+    P19 --- P18[18: GPIOA15]
     
-    %% Pin Styling
-    classDef pin fill:#fff,stroke:#333,stroke-width:1px;
-    class p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30,p31,p32,p33,p34,p35,p36 pin;
-    
-```
+    P8 --- P9[09: GPIOA6] --- P10[10: XTAL1] --- P11[11: XTAL2] --- P12[12: AVDD18] --- P13[13: GPIOB3] --- P14[14: GPIOB0] --- P15[15: GPIOB1] --- P16[16: USB_DM] --- P17[17: USB_DP] --- P18
+
+    %% Thermal Pad in the middle
+    P32 --- EPAD((EPAD / GND))
+    EPAD --- P12
+
+    %% Styling to make it look like a chip
+    style EPAD fill:#ccc,stroke:#333,stroke-dasharray: 5 5
+    classDef pin fill:#fff,stroke:#333,stroke-width:1px,font-size:10px;
+    class P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27,P28,P29,P30,P31,P32,P33,P34,P35,P36 pin;
