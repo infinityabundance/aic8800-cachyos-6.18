@@ -1,4 +1,13 @@
 # aic8800-cachyos-6.18
+
+<p align="center">
+  <a href="https://github.com/infinityabundance/aic8800-cachyos-6.18">
+    <img src="/assets/aic8800.png" alt="AIC8800" width="200">
+  </a>
+</p>
+
+<h1 align="center">AIC8800 Driver (CachyOS Optimized)</h1>
+
 AIC8800 Wi-Fi Driver for CachyOS &amp; Arch Linux
 
 # AIC8800 Wi-Fi Driver for CachyOS & Arch Linux
