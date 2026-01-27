@@ -73,11 +73,16 @@ Applications:
  IoT device
  Wireless device
 
-SYMBOL,DESCRIPTION,MIN,TYP,MAX,UNIT
-VBAT,Supply Voltage from battery or LDO,2.97,3.3,3.63,V
-T<sub>amb</sub>,Ambient Temperature,-20,27,+80,°C
-V<sub>IL</sub>,CMOS Low Level Input Voltage,0,,0.3*VIO,V
-V<sub>IH</sub>,CMOS High Level Input Voltage,0.7*VIO,,VIO,V
-V<sub>TH</sub>,CMOS Threshold Voltage,,0.5*VIO,,V
+### 3. Electrical Characteristics
+
+**Table 3-1 DC Electrical Specification (Recommended Operation Conditions):**
+
+| SYMBOL | DESCRIPTION | MIN | TYP | MAX | UNIT |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| VBAT | Supply Voltage from battery or LDO | 2.97 | 3.3 | 3.63 | V |
+| Tamb | Ambient Temperature | -20 | 27 | +80 | ℃ |
+| VIL | CMOS Low Level Input Voltage | 0 | | 0.3*VIO | V |
+| VIH | CMOS High Level Input Voltage | 0.7*VIO | | VIO | V |
+| VTH | CMOS Threshold Voltage | | 0.5*VIO | | V |
 
 
