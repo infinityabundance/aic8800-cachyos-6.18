@@ -21,9 +21,10 @@ pkgver() {
 package() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Install Firmware to the standard path the driver expects
+  # 1. Install Firmware from your exact repo path: fw/aic8800DC/
+  # We move them to /usr/lib/firmware/aic8800/ for kernel compatibility
   install -dm755 "${pkgdir}/usr/lib/firmware/aic8800"
-  install -m644 firmware/*.bin "${pkgdir}/usr/lib/firmware/aic8800/"
+  install -m644 fw/aic8800DC/*.bin "${pkgdir}/usr/lib/firmware/aic8800/"
 
   # 2. Setup DKMS Source Tree
   _destdir="${pkgdir}/usr/src/aic8800-cachyos-${pkgver}"
