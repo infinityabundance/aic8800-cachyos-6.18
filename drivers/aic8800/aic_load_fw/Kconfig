@@ -32,5 +32,8 @@ config AIC_LOADFW_SUPPORT
 	  It relies on the structures defined in aicwf_usb.h to 
 	  manage communication with the hardware.
 
+	  enables the firmware loader, including MD5-based 
+	  integrity checking for firmware binaries.
+
 	  If you are building this for CachyOS or standard Linux, say M here.
 	  This will create the 'aic_load_fw.ko' module.
