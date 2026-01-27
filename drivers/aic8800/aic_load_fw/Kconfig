@@ -6,5 +6,8 @@ config AIC_LOADFW_SUPPORT
 	  This option enables the firmware loading module required for 
 	  AIC8800 Wi-Fi and Bluetooth initialization.
 
+	  This enables the command management and firmware loading 
+	  logic defined in aicbluetooth_cmds.h/c.
+
 	  If you are building this for CachyOS or standard Linux, say M here.
 	  This will create the 'aic_load_fw.ko' module.
