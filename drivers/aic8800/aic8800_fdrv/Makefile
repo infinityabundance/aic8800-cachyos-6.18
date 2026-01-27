@@ -37,6 +37,7 @@ $(MODULE_NAME)-y := \
     rwnx_vendor_cmd.o \
     rwnx_bfmer.o \
     rwnx_radar.o
+	aic_vendor.o
 
 # Conditional Bridge Support logic
 # This correctly adds the flag and the file only if enabled 
