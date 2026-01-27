@@ -1,8 +1,8 @@
 # Maintainer: infinityabundance
 pkgname=aic8800-cachyos-6.18-git
-pkgver=1.0.r118.g876587a
+pkgver=1.0.r119.g5f65c0c
 pkgrel=1
-pkgdesc="Patched AIC8800DC driver for CachyOS 6.18 - Fixed Module Target"
+pkgdesc="Patched AIC8800DC driver - Final Force Build"
 arch=('x86_64')
 url="https://github.com/infinityabundance/aic8800-cachyos-6.18"
 license=('GPL')
@@ -24,15 +24,16 @@ prepare() {
   # 1. Flatten the directory
   mv drivers/aic8800/aic8800_fdrv/* .
 
-  # 2. FORCE the module target
-  # This changes 'obj-$(CONFIG_...)' to 'obj-m', which tells the kernel to build it.
-  sed -i 's/obj-\$(CONFIG_AIC8800_WLAN_SUPPORT)/obj-m/' Makefile
+  # 2. Force the obj-m target by overwriting the first 2 lines
+  # This removes the conditional CONFIG check entirely.
+  sed -i '1,2c\obj-m += aic8800_fdrv.o\naic8800_fdrv-y := \\' Makefile
 
-  # 3. Fix the backslashes for the object list
-  sed -i '45,55s/\.o/.o \\/' Makefile
-  sed -i 's/\\ \\/\\/g' Makefile
+  # 3. Clean up backslashes (ensure no trailing junk after .o)
+  sed -i 's/\.o.*/.o \\/g' Makefile
+  # Fix the very last object so it doesn't have a trailing backslash
+  sed -i '/aic_vendor.o/s/\\//' Makefile
 
-  # 4. Create the dkms.conf
+  # 4. Standard dkms.conf
   cat << EOF > dkms.conf
 PACKAGE_NAME="aic8800-cachyos"
 PACKAGE_VERSION="${pkgver}"
