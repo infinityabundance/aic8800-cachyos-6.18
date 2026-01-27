@@ -4,6 +4,7 @@ obj-m := $(MODULE_NAME).o
 
 # All object files required for the loader
 $(MODULE_NAME)-y := aic_bluetooth_main.o \
+					aic_rx_prealloc.o \
                     aicbluetooth.o \
                     aic_bluetooth_cmds.o \
                     aicwf_usb.o \
@@ -15,7 +16,7 @@ $(MODULE_NAME)-y := aic_bluetooth_main.o \
 
 # Fixed: Added -DCONFIG_USE_FW_REQUEST if you want the driver 
 # to use the standard Linux firmware loading API
-ccflags-y += -I$(src)/ -DAICWF_USB_SUPPORT -DCONFIG_PLATFORM_UBUNTU -DCONFIG_USE_FW_REQUEST
+ccflags-y += -I$(src)/ -DAICWF_USB_SUPPORT -DCONFIG_PLATFORM_UBUNTU -DCONFIG_USE_FW_REQUEST -DCONFIG_PREALLOC_RX_SKB
 
 KDIR  := /lib/modules/$(shell uname -r)/build
 PWD   := $(shell pwd)
