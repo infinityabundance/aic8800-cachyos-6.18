@@ -17,6 +17,9 @@
 #include <arpa/inet.h>
 #include <net/if.h>
 
+// If adding module path logic, use the Linux standard:
+#define BT_DRIVER_MODULE_PATH "/lib/modules/aic_load_fw.ko"
+
 //tool role
 #define SERVER 0
 #define CLIENT 1
