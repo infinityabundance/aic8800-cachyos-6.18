@@ -1,5 +1,5 @@
 # Maintainer: infinityabundance
-pkgname=aic8800-cachyos-git
+pkgname=aic8800-cachyos-6.18-git
 pkgver=1.0.r0.g0
 pkgrel=1
 pkgdesc="Patched AIC8800DC driver for CachyOS 6.18."
@@ -21,11 +21,12 @@ pkgver() {
 package() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Firmware - Mapping your specific repo path to the system path
+  # 1. Firmware - Source: fw/aic8800DC/ -> Destination: /usr/lib/firmware/aic8800/
   install -dm755 "${pkgdir}/usr/lib/firmware/aic8800"
   install -m644 fw/aic8800DC/*.bin "${pkgdir}/usr/lib/firmware/aic8800/"
 
-  # 2. DKMS Source Tree
+  # 2. Setup DKMS Source Tree
+  # Path must be unique and match what DKMS expects
   _destdir="${pkgdir}/usr/src/aic8800-cachyos-${pkgver}"
   install -dm755 "${_destdir}"
   cp -r . "${_destdir}"
