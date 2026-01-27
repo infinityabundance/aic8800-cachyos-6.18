@@ -18,9 +18,9 @@ High-performance Linux driver for the **AIC8800DC/DW** chipset, specifically pat
 
 The AIC8800 is often sold under the name Fenvi Wifi 6 AX286 USB, as well as many other names (Tenda W311MI V6, BrosTrend AX5, etc.)
 
-[AIC8800-based WiFi 6 AX300 USB adapter sells for less than $3](https://www.cnx-software.com/2024/06/21/aic8800-cheap-wifi-6-ax300-usb-adapter/))
+[AIC8800-based WiFi 6 AX300 USB adapter sells for less than $3](https://www.cnx-software.com/2024/06/21/aic8800-cheap-wifi-6-ax300-usb-adapter/)
 
-[Fenvi Wifi 6 AX286 USB](aliexpress.com/item/1005005698160651.html)
+[Fenvi Wifi 6 AX286 USB](https://aliexpress.com/item/1005005698160651.html)
 
 aliexpress.com/item/1005005698160651.html
 
