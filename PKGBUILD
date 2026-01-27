@@ -1,8 +1,8 @@
 # Maintainer: infinityabundance
 pkgname=aic8800-cachyos-git
-pkgver=1.0.r0.g$(git rev-parse --short HEAD 2>/dev/null || echo "0")
+pkgver=1.0.r0.g0
 pkgrel=1
-pkgdesc="Patched AIC8800DC driver for CachyOS 6.18. Optimized for Zen kernels and scx schedulers."
+pkgdesc="Patched AIC8800DC driver for CachyOS 6.18. Optimized for Zen kernels."
 arch=('x86_64')
 url="https://github.com/infinityabundance/aic8800-cachyos-6.18"
 license=('GPL')
@@ -14,19 +14,19 @@ source=("git+${url}.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "${srcdir}/${pkgname%-git}"
+  cd "${srcdir}/aic8800-cachyos-6.18"
   printf "1.0.r%s.g%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 package() {
-  cd "${srcdir}/${pkgname%-git}"
+  cd "${srcdir}/aic8800-cachyos-6.18"
 
   # 1. Install Firmware
   install -dm755 "${pkgdir}/usr/lib/firmware/aic8800DC"
   install -m644 firmware/*.bin "${pkgdir}/usr/lib/firmware/aic8800DC/"
 
   # 2. Setup DKMS Source Tree
-  _destdir="${pkgdir}/usr/src/${pkgname%-git}-${pkgver}"
+  _destdir="${pkgdir}/usr/src/aic8800-cachyos-${pkgver}"
   install -dm755 "${_destdir}"
   cp -r . "${_destdir}"
 
@@ -34,6 +34,6 @@ package() {
   rm -rf "${_destdir}/.git"
   install -m644 dkms.conf "${_destdir}/dkms.conf"
   
-  # 4. Install Udev Rules (Matching your current aic8800.rules file)
+  # 4. Install Udev Rules
   install -Dm644 aic8800.rules "${pkgdir}/usr/lib/udev/rules.d/aic8800.rules"
 }
