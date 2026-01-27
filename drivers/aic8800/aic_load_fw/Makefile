@@ -9,6 +9,7 @@ $(MODULE_NAME)-y := aic_bluetooth_main.o \
                     aicwf_usb.o \
                     aic_txrxif.o \
                     aic_compat_8800d80.o \
+					aicwf_usb.o \
                     md5.o \
                     aicwf_txq_prealloc.o
 
