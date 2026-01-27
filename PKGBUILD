@@ -2,7 +2,7 @@
 pkgname=aic8800-cachyos-git
 pkgver=1.0.r0.g0
 pkgrel=1
-pkgdesc="Patched AIC8800DC driver for CachyOS 6.18. Optimized for Zen kernels."
+pkgdesc="Patched AIC8800DC driver for CachyOS 6.18."
 arch=('x86_64')
 url="https://github.com/infinityabundance/aic8800-cachyos-6.18"
 license=('GPL')
@@ -21,12 +21,11 @@ pkgver() {
 package() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Install Firmware from your exact repo path: fw/aic8800DC/
-  # We move them to /usr/lib/firmware/aic8800/ for kernel compatibility
+  # 1. Firmware - Mapping your specific repo path to the system path
   install -dm755 "${pkgdir}/usr/lib/firmware/aic8800"
   install -m644 fw/aic8800DC/*.bin "${pkgdir}/usr/lib/firmware/aic8800/"
 
-  # 2. Setup DKMS Source Tree
+  # 2. DKMS Source Tree
   _destdir="${pkgdir}/usr/src/aic8800-cachyos-${pkgver}"
   install -dm755 "${_destdir}"
   cp -r . "${_destdir}"
