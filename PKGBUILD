@@ -1,6 +1,6 @@
 # Maintainer: infinityabundance
 pkgname=aic8800-cachyos-6.18-git
-pkgver=1.0.r114.g3b70d88
+pkgver=1.0.r115.g928b219
 pkgrel=1
 pkgdesc="Patched AIC8800DC driver for CachyOS 6.18."
 arch=('x86_64')
@@ -21,16 +21,23 @@ pkgver() {
 prepare() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Fix root Makefile to only build the existing driver folder
+  # 1. Fix root Makefile
   echo -e "all:\n\t\$(MAKE) -C drivers/aic8800/aic8800_fdrv\n\nclean:\n\t\$(MAKE) -C drivers/aic8800/aic8800_fdrv clean" > Makefile
 
-  # 2. Fix nested Makefile backslashes (the messy block)
+  # 2. Fix nested Makefile backslashes
   sed -i '45,55s/\.o/.o \\/' drivers/aic8800/aic8800_fdrv/Makefile
   sed -i 's/\\ \\/\\/g' drivers/aic8800/aic8800_fdrv/Makefile
 
-  # 3. Tell DKMS exactly where the .ko file is generated
-  # This fixes the "Error 7" / File Not Found issue
-  sed -i 's|BUILT_MODULE_LOCATION\[0\]=.*|BUILT_MODULE_LOCATION[0]="drivers/aic8800/aic8800_fdrv/"|' dkms.conf
+  # 3. Write a fresh, explicit dkms.conf
+  # This avoids all path and array index confusion.
+  cat << EOF > dkms.conf
+PACKAGE_NAME="aic8800-cachyos"
+PACKAGE_VERSION="${pkgver}"
+BUILT_MODULE_NAME[0]="aic8800_fdrv"
+BUILT_MODULE_LOCATION[0]="drivers/aic8800/aic8800_fdrv/"
+DEST_MODULE_LOCATION[0]="/kernel/drivers/net/wireless/"
+AUTOINSTALL="yes"
+EOF
 }
 
 package() {
@@ -45,7 +52,7 @@ package() {
   install -dm755 "${_destdir}"
   cp -r . "${_destdir}"
 
-  # Deploy config files
+  # Clean up and deploy configuration
   rm -rf "${_destdir}/.git"
   install -m644 dkms.conf "${_destdir}/dkms.conf"
   install -Dm644 aic8800.rules "${pkgdir}/usr/lib/udev/rules.d/aic8800.rules"
