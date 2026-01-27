@@ -80,13 +80,13 @@ Low Latency: Optimized IRQ handling via `rwnx_irqs.c` to minimize packet jitter.
 
 Broad Compatibility: Includes specific hardware abstraction layers for both 8800DC and 8800D80 chip revisions.
 
-### 🐧 Modern Kernel Compatibility (6.12+)
+### 🐧 Modern Kernel Compatibility (6.18+)
 
 This version of the driver has been specifically patched to support changes in modern rolling-release kernels used by CachyOS:
 
 `wireless_dev` Update: Patched to handle the relocation/renaming of the mtx member to ensure thread-safe locking.
 
-Channel Switch Notification: Updated `cfg80211_ch_switch_notify` signatures to match the requirements of kernels 6.12 and 6.13.
+Channel Switch Notification: Updated `cfg80211_ch_switch_notify` signatures to match the requirements of kernels 6.18.
 
 ### 📂 File Breakdown
 
