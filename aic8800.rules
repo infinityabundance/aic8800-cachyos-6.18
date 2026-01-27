@@ -1,0 +1,8 @@
+# Udev rules for AIC8800DC Wi-Fi 6 / BT 5.2
+# Targets the aic8800_fmac driver to ensure consistent power management
+
+ACTION=="add", SUBSYSTEM=="net", DRIVERS=="aic8800_fmac", ATTR{power/control}="auto"
+ACTION=="add", SUBSYSTEM=="net", DRIVERS=="aic8800_fmac", ATTR{power/wakeup}="enabled"
+
+# Optional: Set predictable interface naming or custom MTU
+# ACTION=="add", SUBSYSTEM=="net", DRIVERS=="aic8800_fmac", RUN+="/usr/bin/ip link set dev %k mtu 1500"
