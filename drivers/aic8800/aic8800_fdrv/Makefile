@@ -53,7 +53,7 @@ $(MODULE_NAME)-y := \
 	aicwf_compat_8800dc.o \
     rwnx_radar.o
 	aic_vendor.o
-	aicwf_rx_prealloc.o
+	
 
 # --- Feature: RX Prealloc (Performance) ---
 CONFIG_PREALLOC_RX_SKB = y
