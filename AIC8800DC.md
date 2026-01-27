@@ -137,7 +137,7 @@ graph TD
     style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
     style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
-
+```mermaid
 graph TD
     subgraph AIC8800DC_Pinmap ["Figure 4-1 AIC8800DC Pin Map"]
         direction TB
@@ -195,3 +195,4 @@ graph TD
 
     classDef pin fill:#fff,stroke:#333,stroke-width:1px,font-size:11px;
     class P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27,P28,P29,P30,P31,P32,P33,P34,P35,P36 pin;
+```
