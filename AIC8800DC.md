@@ -138,7 +138,7 @@ graph TD
     style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
 
-```
+
 ## 4. PINS Description
 
 ### Table 4-1 AIC8800DC Pins Description
