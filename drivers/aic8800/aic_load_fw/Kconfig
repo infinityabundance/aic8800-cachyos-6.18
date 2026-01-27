@@ -1,5 +1,10 @@
 config AIC_LOADFW_SUPPORT
-	tristate "AIC8800 Load Firmware Support"
+	tristate "AIC8800 Firmware Loader Support"
+	depends on AIC_WLAN_SUPPORT
+	default m
 	help
-	  This is support for aic load firmware driver.
+	  This option enables the firmware loading module required for 
+	  AIC8800 Wi-Fi and Bluetooth initialization.
 
+	  If you are building this for CachyOS or standard Linux, say M here.
+	  This will create the 'aic_load_fw.ko' module.
