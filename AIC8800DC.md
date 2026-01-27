@@ -137,7 +137,7 @@ graph TD
     style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
     style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
-
+```
 graph TD
     subgraph Chip ["AIC8800DC (QFN36)"]
         direction TB
@@ -194,3 +194,4 @@ graph TD
     classDef pin fill:#fff,stroke:#333,stroke-width:1px;
     class p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30,p31,p32,p33,p34,p35,p36 pin;
     
+```
