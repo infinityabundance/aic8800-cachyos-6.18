@@ -16,6 +16,13 @@ CONFIG_BR_SUPPORT = y
 # ccflags-y += -DCONFIG_AICWF_DEBUG
 # -----------------------------
 
+# --- SDIO TOGGLE ---
+CONFIG_AIC8800_SDIO_SUPPORT = n # Set to 'y' for SDIO-based modules
+#ifeq ($(CONFIG_AIC8800_SDIO_SUPPORT), y)
+#ccflags-y += -DCONFIG_SDIO_SUPPORT
+#$(MODULE_NAME)-y += aicwf_sdio.o
+# ------------------------------
+
 # Set the correct firmware path for CachyOS
 ccflags-y += -DCONFIG_AIC_FW_PATH=\"/lib/firmware/aic8800DC/\"
 
