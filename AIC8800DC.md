@@ -137,51 +137,51 @@ graph TD
     style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
     style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
-### Figure 2-1 AIC8800DC Block Diagram
-```mermaid
-graph TD
-    subgraph AIC8800DC ["AIC8800DC"]
-        direction TB
-        
-        %% Column 1
-        BTDM["BTDM 5.2"]
-        WIFI6["WIFI 6"]
-        PMU["PMU"]
-        
-        %% Column 2
-        ROM["ROM"]
-        WLAN["WLAN CPU"]
-        SEC["Security Acc"]
-        DMA["DMA"]
-        SRAM["SRAM"]
-        
-        %% Column 3
-        USB["USB 2.0"]
-        SDIO["SDIO"]
-        UART["UART"]
-        ADC["ADC"]
-        GPIO["GPIO"]
 
-        %% Define Layout/Alignment
-        BTDM --- ROM --- USB
-        WIFI6 --- WLAN --- SDIO
-        WIFI6 --- SEC --- UART
-        WIFI6 --- DMA --- ADC
-        PMU --- SRAM --- GPIO
-    end
-
-    %% Styling
-    style BTDM fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style WIFI6 fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style PMU fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style ROM fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style WLAN fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style SEC fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style DMA fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style SRAM fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style USB fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style SDIO fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style UART fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
-    style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
+## 4. PINS Description
+
+### Table 4-1 AIC8800DC Pins Description
+
+| PIN NAME | QFN NO. | I/O | DESCRIPTION |
+| :--- | :--- | :--- | :--- |
+| **RF** | | | |
+| RF_ANT | 36 | I/O | RF 2.4G, Connect to the output matching network. Support BT combo. |
+| RF_IND | 1 | | RF ground, Connect to the output a 1.2nH inductor to ground. |
+| **PMU** | | | |
+| PWRKEY | 35 | I | Power Key, high level effective, Internal 200K pull-down resistance to ground. |
+| V_RF | 30 | I | RF Circuit Supply Voltage. Bypass with a capacitor as close to the pin as possible. |
+| SW1 | 29 | O | Connect to Pin 28. |
+| VDD33 | 27 | I | System Circuit Supply Voltage. Bypass with a capacitor as close to the pin as possible. |
+| AVDD | 32 | I | 1.3V Voltage. Bypass with a Capacitor to GND. |
+| VDD33_PA | 33 | I | RF PA Voltage Input. Bypass with a capacitor as close to the pin as possible. |
+| AVDD18 | 12 | O | 1.8V Voltage Output. Bypass with a capacitor as close to the pin as possible. |
+| VIO | 24 | I | IO Power Supply. Bypass with a capacitor as close to the pin as possible. |
+| SW2 | 28 | O | Switch node of the regulator. Connect to the output a 10uH inductor. |
+| V_CORE | 25 | I | 0.9V Voltage Input. Digital Core Circuit Supply Voltage. |
+| **CLK** | | | |
+| XTAL1 | 10 | I | Internal/External Oscillator Input. |
+| XTAL2 | 11 | O | Internal Oscillator Output. |
+| **GPIO** | | | |
+| GPIOA0 | 3 | I/O | General-purpose Input/Output |
+| GPIOA1 | 4 | I/O | General-purpose Input/Output |
+| GPIOA2 | 5 | I/O | General-purpose Input/Output |
+| GPIOA3 | 6 | I/O | General-purpose Input/Output |
+| GPIOA4 | 7 | I/O | General-purpose Input/Output |
+| GPIOA5 | 8 | I/O | General-purpose Input/Output |
+| GPIOA6 | 9 | I/O | General-purpose Input/Output |
+| GPIOA7 | 2 | I/O | General-purpose Input/Output |
+| GPIOA8 | 30 | I/O | General-purpose Input/Output |
+| GPIOA9 | 34 | I/O | General-purpose Input/Output |
+| GPIOA10 | 23 | I/O | General-purpose Input/Output |
+| GPIOA11 | 22 | I/O | General-purpose Input/Output |
+| GPIOA12 | 21 | I/O | General-purpose Input/Output |
+| GPIOA13 | 20 | I/O | General-purpose Input/Output |
+| GPIOA14 | 19 | I/O | General-purpose Input/Output |
+| GPIOA15 | 18 | I/O | General-purpose Input/Output |
+| GPIOB0 | 14 | I/O | General-purpose Input/Output |
+| GPIOB1 | 15 | I/O | General-purpose Input/Output |
+| GPIOB2 | 26 | I/O | General-purpose Input/Output |
+| GPIOB3 | 13 | I/O | General-purpose Input/Output |
+| USB_DM | 16 | I/O | D+ Pin of the USB cable |
+| USB_DP | 17 | I/O | D- Pin of the USB cable |
