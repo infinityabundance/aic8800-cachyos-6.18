@@ -139,30 +139,59 @@ graph TD
 ```
 
 graph TD
-    %% Top Row
-    P36[36: RF_ANT] --- P35[35: PWRKEY] --- P34[34: GPIOA9] --- P33[33: VDD33_PA] --- P32[32: AVDD] --- P31[31: V_RF] --- P30[30: GPIOA8] --- P29[29: SW1] --- P28[28: SW2] --- P27[27: VDD33] --- P26[26: GPIOB2]
+    subgraph AIC8800DC_Pinmap ["Figure 4-1 AIC8800DC Pin Map"]
+        direction TB
 
-    %% Vertical side alignments to simulate the square
-    P36 --- P1[01: RF_IND]
-    P26 --- P25[25: V_CORE]
+        %% Top Row of Pins
+        subgraph Top [" "]
+            direction LR
+            P36[36 RF_ANT] --- P35[35 PWRKEY] --- P34[34 GPIOA9] --- P33[33 VDD33_PA] --- P32[32 AVDD] --- P31[31 V_RF] --- P30[30 GPIOA8] --- P29[29 SW1] --- P28[28 SW2] --- P27[27 VDD33] --- P26[26 GPIOB2]
+        end
 
-    %% Left Column
-    P1 --- P2[02: GPIOA7] --- P3[03: GPIOA0] --- P4[04: GPIOA1] --- P5[05: GPIOA2] --- P6[06: GPIOA3] --- P7[07: GPIOA4]
+        %% Middle Section: Left Pins | EPAD | Right Pins
+        subgraph Mid [" "]
+            direction LR
+            subgraph Left [" "]
+                direction TB
+                P1[01 RF_IND]
+                P2[02 GPIOA7]
+                P3[03 GPIOA0]
+                P4[04 GPIOA1]
+                P5[05 GPIOA2]
+                P6[06 GPIOA3]
+                P7[07 GPIOA4]
+            end
 
-    %% Right Column
-    P25 --- P24[24: VIO] --- P23[23: GPIOA10] --- P22[22: GPIOA11] --- P21[21: GPIOA12] --- P20[20: GPIOA13] --- P19[19: GPIOA14]
+            EPAD((EPAD / GND))
 
-    %% Bottom Row connections
-    P7 --- P8[08: GPIOA5]
-    P19 --- P18[18: GPIOA15]
-    
-    P8 --- P9[09: GPIOA6] --- P10[10: XTAL1] --- P11[11: XTAL2] --- P12[12: AVDD18] --- P13[13: GPIOB3] --- P14[14: GPIOB0] --- P15[15: GPIOB1] --- P16[16: USB_DM] --- P17[17: USB_DP] --- P18
+            subgraph Right [" "]
+                direction TB
+                P25[25 V_CORE]
+                P24[24 VIO]
+                P23[23 GPIOA10]
+                P22[22 GPIOA11]
+                P21[21 GPIOA12]
+                P20[20 GPIOA13]
+                P19[19 GPIOA14]
+            end
+        end
 
-    %% Thermal Pad in the middle
-    P32 --- EPAD((EPAD / GND))
-    EPAD --- P12
+        %% Bottom Row of Pins
+        subgraph Bottom [" "]
+            direction LR
+            P8[08 GPIOA5] --- P9[09 GPIOA6] --- P10[10 XTAL1] --- P11[11 XTAL2] --- P12[12 AVDD18] --- P13[13 GPIOB3] --- P14[14 GPIOB0] --- P15[15 GPIOB1] --- P16[16 USB_DM] --- P17[17 USB_DP] --- P18[18 GPIOA15]
+        end
 
-    %% Styling to make it look like a chip
-    style EPAD fill:#ccc,stroke:#333,stroke-dasharray: 5 5
-    classDef pin fill:#fff,stroke:#333,stroke-width:1px,font-size:10px;
+        %% Structural Links to maintain shape
+        Top --- Mid --- Bottom
+    end
+
+    %% Styling for the package and pins
+    style AIC8800DC_Pinmap fill:#fff,stroke:#333,stroke-width:2px
+    style EPAD fill:#BDD7EE,stroke:#2F5597,stroke-dasharray: 5 5
+    style Top fill:none,stroke:none
+    style Mid fill:none,stroke:none
+    style Bottom fill:none,stroke:none
+
+    classDef pin fill:#fff,stroke:#333,stroke-width:1px,font-size:11px;
     class P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27,P28,P29,P30,P31,P32,P33,P34,P35,P36 pin;
