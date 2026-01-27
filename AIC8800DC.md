@@ -73,7 +73,7 @@ Applications:
  IoT device
  Wireless device
 
-### 3. Electrical Characteristics
+### Electrical Characteristics
 
 **Table 3-1 DC Electrical Specification (Recommended Operation Conditions):**
 
@@ -86,3 +86,24 @@ Applications:
 | VTH | CMOS Threshold Voltage | | 0.5*VIO | | V |
 
 
+## 2. Platform Description
+
+### Figure 2-1 AIC8800DC Block Diagram
+```mermaid
+graph TD
+    subgraph "AIC8800DC"
+        BTDM["BTDM 5.2"]
+        ROM["ROM"]
+        USB["USB 2.0"]
+        WIFI6["WIFI 6"]
+        CPU["WLAN CPU"]
+        SDIO["SDIO"]
+        SEC["Security Acc"]
+        UART["UART"]
+        DMA["DMA"]
+        ADC["ADC"]
+        PMU["PMU"]
+        SRAM["SRAM"]
+        GPIO["GPIO"]
+    end
+```
