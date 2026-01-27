@@ -107,7 +107,9 @@ Check your Device ID by running:
 lsusb | grep -iE "a69c|368b"
 ```
 Mode	ID (VID:PID)	Status
+
 Storage	a69c:5721	Stuck. Wi-Fi is hidden.
+
 Wi-Fi	368b:8d81	Ready. Driver should load.
 
 2. Manual Fix (Eject)
