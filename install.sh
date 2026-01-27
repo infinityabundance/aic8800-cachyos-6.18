@@ -1,39 +1,21 @@
 #!/bin/bash
-# AIC8800 Universal Installer for CachyOS/Linux
-BASE_DIR=$(pwd)
+# AIC8800 DKMS Auto-Installer for CachyOS
+DRV_NAME="aic8800"
+DRV_VERSION="1.0.0"
 
-echo "Step 1: Configuring Udev rules..."
-# Fixed: Dynamic pathing replaces /usr/src/tenda/ [cite: 4, 13]
-cp "$BASE_DIR/aic.rules" /etc/udev/rules.d/
-udevadm control --reload
-udevadm trigger
+echo "Starting AIC8800 driver installation..."
 
-# Handle the virtual disk if it exists [cite: 5, 13]
-if [ -L /dev/aicudisk ]; then
-    eject /dev/aicudisk
-fi
+# 1. Prepare the source directory
+sudo mkdir -p /usr/src/${DRV_NAME}-${DRV_VERSION}
 
-echo "Step 2: Installing Firmware..."
-# Fixed: Dynamic pathing to local 'fw' folder [cite: 5]
-mkdir -p /lib/firmware/aic8800DC
-cp -rf "$BASE_DIR/fw/aic8800DC/"* /lib/firmware/aic8800DC/
+# 2. Copy all files (using . ensures everything is included)
+sudo cp -r . /usr/src/${DRV_NAME}-${DRV_VERSION}
 
-echo "Step 3: Building and Installing Drivers..."
-cd "$BASE_DIR/drivers/aic8800/"
-make && make install
-if [ $? -ne 0 ]; then
-    echo "Driver build failed. Check kernel headers."
-    exit 1
-fi
+# 3. Register with DKMS
+sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 
-# Load modules using the compiled files [cite: 8, 9]
-modprobe cfg80211
-insmod "$BASE_DIR/drivers/aic8800/aic_load_fw/aic_load_fw.ko"
-insmod "$BASE_DIR/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.ko"
+# 4. Build and Install
+sudo dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+sudo dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
 
-echo "Step 4: Building RF Test tools..."
-cd "$BASE_DIR/aicrf_test/"
-make && make install
-
-echo "Installation complete!"
-exit 0
+echo "Installation complete. The driver will now automatically update with your kernel."
