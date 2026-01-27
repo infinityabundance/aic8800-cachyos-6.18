@@ -16,7 +16,7 @@ ccflags-y += -DCONFIG_AIC_FW_PATH=\"/lib/firmware/aic8800DC/\"
 # Compiler Warnings Suppression
 ccflags-y += -Wno-implicit-fallthrough -Wno-attribute-warning -Wno-unused-function
 
-# Object Files
+# Object Files - Core
 $(MODULE_NAME)-y := \
     rwnx_main.o \
     aic_rx_fill.o \
@@ -36,15 +36,14 @@ $(MODULE_NAME)-y := \
     rwnx_cfg80211.o \
     rwnx_vendor_cmd.o \
     rwnx_bfmer.o \
-    rwnx_radar.o \
-    aic_br_ext.o
+    rwnx_radar.o
 
-
+# Conditional Bridge Support logic
+# This correctly adds the flag and the file only if enabled 
 ifeq ($(CONFIG_BR_SUPPORT), y)
   ccflags-y += -DCONFIG_BR_SUPPORT
   $(MODULE_NAME)-y += aic_br_ext.o
 endif
-
 
 # Search paths for headers
 ccflags-y += -I$(src) -I$(src)/../aic_load_fw
