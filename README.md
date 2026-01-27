@@ -61,6 +61,52 @@ This module is the "Loader" for the AIC8800 series. Its primary purpose is to in
 
 ---
 
+## 🛠️ Module: `aic8800_fdrv`
+
+The aic8800_fdrv directory contains the Full-MAC (fdrv) driver logic. This component acts as the primary interface between the Linux kernel's cfg80211 subsystem and the AIC8800 series hardware.
+🚀 Key Features & Optimizations
+
+    Wi-Fi 6 Support: Full implementation of 802.11ax features, including MU-MIMO and VHT Beamforming via `rwnx_bfmer.c`.
+
+    Advanced Rate Control: Utilizes `rwnx_extrc.c` for dynamic MCS (Modulation and Coding Scheme) scaling, ensuring maximum throughput even in high-interference environments.
+
+    CachyOS Performance Tuning:
+
+        RX Pre-allocation: Uses `aicwf_rx_prealloc.c` and `aic_rx_fill.c` to maintain a high-speed buffer pool, reducing CPU overhead during gigabit-speed transfers.
+
+        Low Latency: Optimized IRQ handling via `rwnx_irqs.c` to minimize packet jitter.
+
+    Broad Compatibility: Includes specific hardware abstraction layers for both 8800DC and 8800D80 chip revisions.
+
+### 🐧 Modern Kernel Compatibility (6.12+)
+
+This version of the driver has been specifically patched to support changes in modern rolling-release kernels used by CachyOS:
+
+    `wireless_dev` Update: Patched to handle the relocation/renaming of the mtx member to ensure thread-safe locking.
+
+    Channel Switch Notification: Updated `cfg80211_ch_switch_notify` signatures to match the requirements of kernels 6.12 and 6.13.
+
+### 📂 File Breakdown
+
+Component	Responsibility
+`rwnx_main.c`	Module entry/exit and core radio state management.
+`rwnx_cfg80211.c`	Standardized interface for NetworkManager and wpa_supplicant.
+`rwnx_utils.c`	Bus-agnostic utility functions (USB/SDIO detection).
+`aicwf_compat_*.c`	Chip-specific calibration and firmware loading logic.
+`rwnx_radar.c`	DFS (Dynamic Frequency Selection) for legal 5GHz operation.
+
+### ⚙️ Build Options (Makefile)
+
+You can toggle specific features within the Makefile to optimize the driver size:
+
+    CONFIG_PREALLOC_RX_SKB: Enables the high-performance RX buffer pool (Default: y).
+
+    CONFIG_BR_SUPPORT: Enables support for network bridging (Default: y).
+
+    CONFIG_AIC8800_SDIO_SUPPORT: Enable only for integrated SDIO chips (Default: n for USB).
+
+---
+
 ## 🛠 Prerequisites
 
 Ensure you have your kernel headers and the `usb_modeswitch` utility installed:
