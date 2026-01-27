@@ -21,12 +21,11 @@ pkgver() {
 package() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Firmware - Source: fw/aic8800DC/ -> Destination: /usr/lib/firmware/aic8800/
+  # 1. Firmware - From the nested folder
   install -dm755 "${pkgdir}/usr/lib/firmware/aic8800"
   install -m644 fw/aic8800DC/*.bin "${pkgdir}/usr/lib/firmware/aic8800/"
 
-  # 2. Setup DKMS Source Tree
-  # Path must be unique and match what DKMS expects
+  # 2. DKMS Source Tree
   _destdir="${pkgdir}/usr/src/aic8800-cachyos-${pkgver}"
   install -dm755 "${_destdir}"
   cp -r . "${_destdir}"
@@ -35,6 +34,6 @@ package() {
   rm -rf "${_destdir}/.git"
   install -m644 dkms.conf "${_destdir}/dkms.conf"
   
-  # 4. Install Udev Rules
+  # 4. Udev Rules - FROM THE ROOT (Where it actually is)
   install -Dm644 aic8800.rules "${pkgdir}/usr/lib/udev/rules.d/aic8800.rules"
 }
