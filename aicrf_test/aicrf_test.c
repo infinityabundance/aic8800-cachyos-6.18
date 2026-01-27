@@ -7,8 +7,8 @@
 #include<stdlib.h>
 #include <errno.h>
 #define WIFI_DRIVER_FW_PATH "sta"
-#define WIFI_DRIVER_MODULE_NAME "aic8800_fdrv"  // Changed from rwnx_fdrv
-#define WIFI_DRIVER_MODULE_PATH "/lib/modules/aic8800_fdrv.ko" // Changed from /vendor/
+#define WIFI_DRIVER_MODULE_NAME "aic8800_fdrv"  // Fixed from rwnx_fdrv 
+#define WIFI_DRIVER_MODULE_PATH "/lib/modules/aic8800_fdrv.ko" // Fixed from /vendor/
 #define MAX_DRV_CMD_SIZE 1536
 #define TXRX_PARA								SIOCDEVPRIVATE+1
 
