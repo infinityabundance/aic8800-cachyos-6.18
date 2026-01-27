@@ -25,5 +25,8 @@ config AIC_LOADFW_SUPPORT
 	  Enables the firmware loader with TX queue pre-allocation 
 	  optimizations (aicwf_txq_prealloc.h).
 
+	  This enables the USB-based firmware loader for AIC8800.
+	  It handles device enumeration and power management.
+
 	  If you are building this for CachyOS or standard Linux, say M here.
 	  This will create the 'aic_load_fw.ko' module.
