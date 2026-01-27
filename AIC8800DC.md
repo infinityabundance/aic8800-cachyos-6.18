@@ -89,21 +89,51 @@ Applications:
 ## 2. Platform Description
 
 ### Figure 2-1 AIC8800DC Block Diagram
+
 ```mermaid
 graph TD
-    subgraph "AIC8800DC"
-        BTDM["BTDM 5.2"]
-        ROM["ROM"]
-        USB["USB 2.0"]
-        WIFI6["WIFI 6"]
-        CPU["WLAN CPU"]
-        SDIO["SDIO"]
-        SEC["Security Acc"]
-        UART["UART"]
-        DMA["DMA"]
-        ADC["ADC"]
+    subgraph AIC8800DC ["AIC8800DC"]
+        direction TB
+        
+        %% Column 1
+        BTDM["BTDM5.2"]
+        WIFI6["WIFI6"]
         PMU["PMU"]
+        
+        %% Column 2
+        ROM["ROM"]
+        WLAN["WLAN CPU"]
+        SEC["Security Acc"]
+        DMA["DMA"]
         SRAM["SRAM"]
+        
+        %% Column 3
+        USB["USB2.0"]
+        SDIO["SDIO"]
+        UART["UART"]
+        ADC["ADC"]
         GPIO["GPIO"]
+
+        %% Define Layout/Alignment
+        BTDM --- ROM --- USB
+        WIFI6 --- WLAN --- SDIO
+        WIFI6 --- SEC --- UART
+        WIFI6 --- DMA --- ADC
+        PMU --- SRAM --- GPIO
     end
+
+    %% Style for Blue Blocks
+    style BTDM fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style WIFI6 fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style PMU fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style ROM fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style WLAN fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style SEC fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style DMA fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style SRAM fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style USB fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style SDIO fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style UART fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style ADC fill:#5B9BD5,color:#fff,stroke:#2F5597
+    style GPIO fill:#5B9BD5,color:#fff,stroke:#2F5597
 ```
