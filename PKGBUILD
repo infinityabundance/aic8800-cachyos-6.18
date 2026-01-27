@@ -1,8 +1,8 @@
 # Maintainer: infinityabundance
 pkgname=aic8800-cachyos-6.18-git
-pkgver=1.0.r129.g4c115b6
-pkgrel=3
-pkgdesc="AIC8800DC driver - Final Directory Fix"
+pkgver=1.0.r130.g61e6e40
+pkgrel=4
+pkgdesc="AIC8800DC driver - Root Makefile & Flattened Source"
 arch=('x86_64')
 url="https://github.com/infinityabundance/aic8800-cachyos-6.18"
 license=('GPL')
@@ -20,10 +20,12 @@ pkgver() {
 
 prepare() {
   cd "$srcdir/aic8800-cachyos-6.18"
-  # Flatten source files into root
-  cp -v drivers/aic8800/aic8800_fdrv/*.[ch] .
 
-  # Create a clean Makefile
+  # 1. Cleanly flatten the specific driver source into the root of our build
+  # This makes the Makefile much simpler and avoids path errors
+  find drivers/aic8800/aic8800_fdrv/ -type f -name "*.[ch]" -exec cp -t . {} +
+
+  # 2. Create the Makefile in the ROOT of the source
   cat << 'EOF' > Makefile
 obj-m += aic8800_fdrv.o
 aic8800_fdrv-y := \
@@ -55,18 +57,20 @@ EOF
 package() {
   cd "$srcdir/aic8800-cachyos-6.18"
 
-  # 1. Install Firmware
+  # 1. Firmware
   install -dm755 "$pkgdir/usr/lib/firmware/aic8800"
   install -m644 fw/aic8800DC/*.bin "$pkgdir/usr/lib/firmware/aic8800/"
 
-  # 2. DKMS Source - Hardcoding the version string to match pkgver exactly
+  # 2. DKMS Source - Flat Structure
   local _fullver=$(pkgver)
   local _destdir="$pkgdir/usr/src/aic8800-cachyos-$_fullver"
-  
   install -dm755 "$_destdir"
-  cp *.[ch] Makefile "$_destdir/"
+  
+  # Copy all the .c and .h files we flattened in prepare()
+  cp *.[ch] "$_destdir/"
+  cp Makefile "$_destdir/"
 
-  # 3. Create dkms.conf
+  # 3. DKMS Config
   cat << EOF > "$_destdir/dkms.conf"
 PACKAGE_NAME="aic8800-cachyos"
 PACKAGE_VERSION="$_fullver"
