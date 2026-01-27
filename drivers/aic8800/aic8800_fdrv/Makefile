@@ -10,6 +10,12 @@ CONFIG_ROM_PATCH_EN = y
 CONFIG_USE_5G = y
 CONFIG_BR_SUPPORT = y
 
+
+# --- DEBUG TOGGLE ---
+# Uncomment the line below to enable verbose logging in dmesg
+# ccflags-y += -DCONFIG_AICWF_DEBUG
+# -----------------------------
+
 # Set the correct firmware path for CachyOS
 ccflags-y += -DCONFIG_AIC_FW_PATH=\"/lib/firmware/aic8800DC/\"
 
