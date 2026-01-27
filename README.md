@@ -127,7 +127,7 @@ Before installing the driver, you must ensure you have the kernel headers and DK
 ```
 sudo pacman -S dkms linux-cachyos-headers
 ```
-    Note: If you are using a different kernel (like linux-cachyos-lts or linux-cachyos-bore), install the matching headers package (e.g., linux-cachyos-lts-headers).
+Note: If you are using a different kernel (like linux-cachyos-lts or linux-cachyos-bore), install the matching headers package (e.g., linux-cachyos-lts-headers).
 
 ### 2. Install the Driver
 
