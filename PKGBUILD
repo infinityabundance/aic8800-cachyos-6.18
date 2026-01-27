@@ -1,6 +1,6 @@
 # Maintainer: infinityabundance
 pkgname=aic8800-cachyos-6.18-git
-pkgver=1.0.r113.gbecc03b
+pkgver=1.0.r114.g3b70d88
 pkgrel=1
 pkgdesc="Patched AIC8800DC driver for CachyOS 6.18."
 arch=('x86_64')
@@ -21,14 +21,16 @@ pkgver() {
 prepare() {
   cd "${srcdir}/aic8800-cachyos-6.18"
 
-  # 1. Fix the root Makefile to stop looking for btlpm
+  # 1. Fix root Makefile to only build the existing driver folder
   echo -e "all:\n\t\$(MAKE) -C drivers/aic8800/aic8800_fdrv\n\nclean:\n\t\$(MAKE) -C drivers/aic8800/aic8800_fdrv clean" > Makefile
 
-  # 2. Fix the broken backslashes in the driver Makefile
-  # This targets the specific messy block we saw earlier
+  # 2. Fix nested Makefile backslashes (the messy block)
   sed -i '45,55s/\.o/.o \\/' drivers/aic8800/aic8800_fdrv/Makefile
-  # Remove potential double backslashes and fix the last item
   sed -i 's/\\ \\/\\/g' drivers/aic8800/aic8800_fdrv/Makefile
+
+  # 3. Tell DKMS exactly where the .ko file is generated
+  # This fixes the "Error 7" / File Not Found issue
+  sed -i 's|BUILT_MODULE_LOCATION\[0\]=.*|BUILT_MODULE_LOCATION[0]="drivers/aic8800/aic8800_fdrv/"|' dkms.conf
 }
 
 package() {
@@ -43,7 +45,7 @@ package() {
   install -dm755 "${_destdir}"
   cp -r . "${_destdir}"
 
-  # Clean up and deploy configuration
+  # Deploy config files
   rm -rf "${_destdir}/.git"
   install -m644 dkms.conf "${_destdir}/dkms.conf"
   install -Dm644 aic8800.rules "${pkgdir}/usr/lib/udev/rules.d/aic8800.rules"
