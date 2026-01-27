@@ -1,23 +1,29 @@
-#CROSS_COMPILE := /opt/toolchains/mips-gcc540-glibc222-64bit-r3.3.0/bin/mips-linux-gnu-
-
+# AIC8800 RF Test Tools Makefile
+CC := $(CROSS_COMPILE)gcc
 LDFLAGS := -lpthread
 
-default: all
+# Executables to build
+TARGETS := wifi_test bt_test
 
-all: wifi_test bt_test
+all: $(TARGETS)
 
 wifi_test: wifi_test.o
-	$(CROSS_COMPILE)gcc $+ -o $@
+	$(CC) $+ -o $@
 
 bt_test: bt_test.o
-	$(CROSS_COMPILE)gcc $+ $(LDFLAGS) -o $@
+	$(CC) $+ $(LDFLAGS) -o $@
 
 %.o: %.c
-	$(CROSS_COMPILE)gcc -c $+ -o $@
+	$(CC) -c $< -o $@
 
 clean:
-	rm *.o wifi_test bt_test
+	rm -f *.o $(TARGETS)
 
 install:
-	sudo cp wifi_test /sbin
-	sudo cp bt_test /sbin
+	install -d /usr/local/bin
+	install -m 755 wifi_test /usr/local/bin/
+	install -m 755 bt_test /usr/local/bin/
+
+uninstall:
+	rm -f /usr/local/bin/wifi_test
+	rm -f /usr/local/bin/bt_test
