@@ -17,6 +17,84 @@ This repository solves the common "Firmware not found" and "USB Mass Storage" is
 
 ---
 
+## 🛠 Prerequisites
+
+Ensure you have your kernel headers and the `usb_modeswitch` utility installed:
+
+```
+sudo pacman -S base-devel linux-cachyos-headers usb_modeswitch
+```
+
+---
+
+## 🚀 Installation (DKMS)
+
+### 1. Install Dependencies
+
+Before installing the driver, you must ensure you have the kernel headers and DKMS installed. For CachyOS, run:
+
+```
+sudo pacman -S dkms linux-cachyos-headers
+```
+Note: If you are using a different kernel (like linux-cachyos-lts or linux-cachyos-bore), install the matching headers package (e.g., linux-cachyos-lts-headers).
+
+### 2. Install the Driver
+
+Use the provided automation script to register the driver with DKMS. This ensures the driver is automatically rebuilt whenever your kernel updates.
+
+```
+git clone https://github.com/infinityabundance/aic8800-cachyos-6.18.git
+cd aic8800-cachyos-6.18
+chmod +x install.sh
+sudo ./install.sh
+```
+
+### 3. Load the Driver
+
+After installation, you can load the module immediately without rebooting:
+
+```
+sudo modprobe aic8800_fdrv
+```
+
+
+---
+
+## 🚦 Post-Installation
+Check Interface Status
+
+If your Wi-Fi doesn't turn on immediately, it might be soft-blocked by the kernel:
+```
+sudo rfkill unblock wifi
+ip link set wlan0 up
+```
+Automatic Loading
+
+To ensure the driver loads automatically on every boot, run:
+```
+echo 'aic8800_fdrv' | sudo tee /etc/modules-load.d/aic8800.conf
+```
+---
+
+## 💿 USB Modeswitch (Storage Eject)
+
+Many AIC8800 USB devices initially mount as a Virtual CD-ROM/Storage device. The driver will not load until the device is switched to Wi-Fi mode.
+
+Manual Eject: If your device is plugged in but the Wi-Fi isn't showing up, find the "CD-ROM" in your file manager and click Eject, or run:
+Bash
+
+### Replace 'sr0' with your actual virtual CD-ROM device if different
+sudo eject /dev/sr0
+
+Automated Eject (Recommended): To handle this automatically every time you plug it in, install the usb_modeswitch package:
+Bash
+
+sudo pacman -S usb_modeswitch
+
+Most modern distributions will then handle the switch automatically using udev rules.
+
+---
+
 ## 📂 Module: `aic_load_fw`
 
 Path: drivers/aic8800/aic_load_fw/
@@ -107,65 +185,6 @@ CONFIG_BR_SUPPORT: Enables support for network bridging (Default: y).
 
 CONFIG_AIC8800_SDIO_SUPPORT: Enable only for integrated SDIO chips (Default: n for USB).
 
----
-
-## 🛠 Prerequisites
-
-Ensure you have your kernel headers and the `usb_modeswitch` utility installed:
-
-```
-sudo pacman -S base-devel linux-cachyos-headers usb_modeswitch
-```
-
----
-
-## 🚀 Installation (DKMS)
-
-### 1. Install Dependencies
-
-Before installing the driver, you must ensure you have the kernel headers and DKMS installed. For CachyOS, run:
-
-```
-sudo pacman -S dkms linux-cachyos-headers
-```
-Note: If you are using a different kernel (like linux-cachyos-lts or linux-cachyos-bore), install the matching headers package (e.g., linux-cachyos-lts-headers).
-
-### 2. Install the Driver
-
-Use the provided automation script to register the driver with DKMS. This ensures the driver is automatically rebuilt whenever your kernel updates.
-
-```
-git clone https://github.com/infinityabundance/aic8800-cachyos-6.18.git
-cd aic8800-cachyos-6.18
-chmod +x install.sh
-sudo ./install.sh
-```
-
-### 3. Load the Driver
-
-After installation, you can load the module immediately without rebooting:
-
-```
-sudo modprobe aic8800_fdrv
-```
-
-
----
-
-## 🚦 Post-Installation
-Check Interface Status
-
-If your Wi-Fi doesn't turn on immediately, it might be soft-blocked by the kernel:
-```
-sudo rfkill unblock wifi
-ip link set wlan0 up
-```
-Automatic Loading
-
-To ensure the driver loads automatically on every boot, run:
-```
-echo 'aic8800_fdrv' | sudo tee /etc/modules-load.d/aic8800.conf
-```
 ---
 
 ## ⚠️ Notes
