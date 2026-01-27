@@ -55,6 +55,13 @@ $(MODULE_NAME)-y := \
 	aic_vendor.o
 	aicwf_rx_prealloc.o
 
+# --- Feature: RX Prealloc (Performance) ---
+CONFIG_PREALLOC_RX_SKB = y
+ifeq ($(CONFIG_PREALLOC_RX_SKB), y)
+    ccflags-y += -DCONFIG_PREALLOC_RX_SKB
+    $(MODULE_NAME)-y += aicwf_rx_prealloc.o
+endif
+
 # 1. Bridge Support (NAT25 logic)
 ifeq ($(CONFIG_BR_SUPPORT), y)
   ccflags-y += -DCONFIG_BR_SUPPORT
