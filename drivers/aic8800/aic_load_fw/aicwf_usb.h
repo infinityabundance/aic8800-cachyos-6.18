@@ -66,9 +66,16 @@ enum AICWF_IC{
 #define FW_ADID_BASE_NAME_U03           "fw_adid_u03.bin"
 
 #else
+#define FW_RF_PATCH_BASE_NAME           "fw_patch.bin"
+#define FW_RF_ADID_BASE_NAME            "fw_adid.bin"
+#define FW_RF_BASE_NAME                 "fmacfw_rf.bin"
 #define FW_PATCH_BASE_NAME              "fw_patch.bin"
 #define FW_ADID_BASE_NAME               "fw_adid.bin"
 #define FW_BASE_NAME                    "fmacfw.bin"
+#define FW_BLE_SCAN_WAKEUP_NAME         "fw_ble_scan.bin"
+#define FW_BLE_SCAN_AD_FILTER_NAME      "fw_ble_scan_ad_filter.bin"
+#define FW_PATCH_BASE_NAME_U03          "fw_patch_u03.bin"
+#define FW_ADID_BASE_NAME_U03           "fw_adid_u03.bin"
 #endif
 
 #define FW_PATCH_TABLE_NAME             "fw_patch_table.bin"
