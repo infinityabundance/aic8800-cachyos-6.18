@@ -9,7 +9,7 @@ if ! command -v dkms &> /dev/null; then
     exit 1
 fi
 
-DRV_NAME="aic8800"
+DRV_NAME="aic8800-cachyos"
 DRV_VERSION="1.0.0"
 
 echo "------------------------------------------"

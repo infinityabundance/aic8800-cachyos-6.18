@@ -156,7 +156,7 @@ dmesg | grep -i "aic8"
 ```
 Success: Should show Firmware download success.
 
-Error -2: Means you forgot to copy the files to /usr/lib/firmware/aic8800/.
+Error -2: Means you forgot to copy the files to /usr/lib/firmware/aic8800DC/.
 
 ---
 

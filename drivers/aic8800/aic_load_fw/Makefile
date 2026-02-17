@@ -4,16 +4,13 @@ obj-m := $(MODULE_NAME).o
 
 # All object files required for the loader
 $(MODULE_NAME)-y := aic_bluetooth_main.o \
-					aic_rx_prealloc.o \
-					aicwf_rx_prealloc.o
                     aicbluetooth.o \
-                    aic_bluetooth_cmds.o \
-					aicbluetooth_cmds.o \
+                    aicbluetooth_cmds.o \
                     aicwf_usb.o \
                     aic_txrxif.o \
                     aic_compat_8800d80.o \
-					aicwf_usb.o \
                     md5.o \
+                    aicwf_rx_prealloc.o \
                     aicwf_txq_prealloc.o
 
 # Fixed: Added -DCONFIG_USE_FW_REQUEST if you want the driver 

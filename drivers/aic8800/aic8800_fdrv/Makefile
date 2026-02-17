@@ -24,44 +24,48 @@ CONFIG_BR_SUPPORT = y
 # ------------------------------
 
 # Set the correct firmware path for CachyOS
-ccflags-y += -DCONFIG_AIC_FW_PATH=\"/lib/firmware/aic8800DC/\"
+ccflags-y += -DCONFIG_AIC_FW_PATH=\"/usr/lib/firmware\"
+ccflags-y += -DAICWF_USB_SUPPORT
 
 # Compiler Warnings Suppression
 ccflags-y += -Wno-implicit-fallthrough -Wno-attribute-warning -Wno-unused-function
 
 # Object Files - Core
 $(MODULE_NAME)-y := \
-    rwnx_main.o \
-    aic_rx_fill.o \
-    rwnx_msg_tx.o \
-    rwnx_msg_rx.o \
-    rwnx_utils.o \
-    rwnx_v7.o \
-    rwnx_txq.o \
-    rwnx_tx.o \
-    rwnx_rx.o \
-    rwnx_irqs.o \
-    rwnx_pci.o \
-    rwnx_p2p.o \
-    rwnx_mesh.o \
-    rwnx_extrc.o \
-    rwnx_tdls.o \
-    rwnx_cfg80211.o \
-    rwnx_vendor_cmd.o \
-    rwnx_bfmer.o \
-	aicwf_compat_8800d80.o \
-	aicwf_compat_8800dc.o \
-    rwnx_radar.o \
-	aic_vendor.o \
-	rwnx_bfmer.o \
-	
-
-# --- Feature: RX Prealloc (Performance) ---
-CONFIG_PREALLOC_RX_SKB = y
-ifeq ($(CONFIG_PREALLOC_RX_SKB), y)
-    ccflags-y += -DCONFIG_PREALLOC_RX_SKB
-    $(MODULE_NAME)-y += aicwf_rx_prealloc.o
-endif
+  rwnx_main.o \
+  rwnx_cmds.o \
+  rwnx_cfgfile.o \
+  rwnx_debugfs.o \
+  rwnx_fw_dump.o \
+  rwnx_fw_trace.o \
+  rwnx_mod_params.o \
+  rwnx_mu_group.o \
+  rwnx_msg_tx.o \
+  rwnx_msg_rx.o \
+  rwnx_platform.o \
+  rwnx_radar.o \
+  rwnx_rx.o \
+  rwnx_strs.o \
+  rwnx_tdls.o \
+  rwnx_testmode.o \
+  rwnx_tx.o \
+  rwnx_txq.o \
+  rwnx_utils.o \
+  rwnx_v7.o \
+  rwnx_gki.o \
+  rwnx_dini.o \
+  rwnx_events.o \
+  rwnx_irqs.o \
+  rwnx_mesh.o \
+  rwnx_bfmer.o \
+  aic_vendor.o \
+  aicwf_compat_8800d80.o \
+  aicwf_compat_8800dc.o \
+  aicwf_tcp_ack.o \
+  aicwf_txrxif.o \
+  aicwf_usb.o \
+  aicwf_wext_linux.o \
+  usb_host.o
 
 # 1. Bridge Support (NAT25 logic)
 ifeq ($(CONFIG_BR_SUPPORT), y)

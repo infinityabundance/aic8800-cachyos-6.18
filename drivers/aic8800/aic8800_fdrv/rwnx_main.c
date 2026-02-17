@@ -9794,7 +9794,17 @@ MODULE_LICENSE("GPL");
 
 int get_testmode(void) { return 0; }
 void set_testmode(int mode) { }
-char *get_fw_path(void) { return "/lib/firmware/aic8800"; }
+void get_fw_path(char *fw_path)
+{
+    if (!fw_path) {
+        return;
+    }
+#ifdef CONFIG_AIC_FW_PATH
+    snprintf(fw_path, 200, "%s", CONFIG_AIC_FW_PATH);
+#else
+    snprintf(fw_path, 200, "/usr/lib/firmware");
+#endif
+}
 int get_adap_test(void) { return 0; }
 int get_userconfig_txpwr_idx(void) { return 0; }
 int get_userconfig_txpwr_ofst(void) { return 0; }

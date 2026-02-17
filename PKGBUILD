@@ -1,8 +1,8 @@
 # Maintainer: infinityabundance
-pkgname=aic8800-cachyos-6.18-git
-pkgver=1.0.r130.g61e6e40
-pkgrel=4
-pkgdesc="AIC8800DC driver - Root Makefile & Flattened Source"
+pkgname=aic8800-cachyos-dkms
+pkgver=1.0.r132.g213d94c
+pkgrel=1
+pkgdesc="AIC8800DC/DW DKMS driver for CachyOS"
 arch=('x86_64')
 url="https://github.com/infinityabundance/aic8800-cachyos-6.18"
 license=('GPL')
@@ -18,67 +18,24 @@ pkgver() {
   printf "1.0.r%s.g%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-prepare() {
-  cd "$srcdir/aic8800-cachyos-6.18"
-
-  # 1. Cleanly flatten the specific driver source into the root of our build
-  # This makes the Makefile much simpler and avoids path errors
-  find drivers/aic8800/aic8800_fdrv/ -type f -name "*.[ch]" -exec cp -t . {} +
-
-  # 2. Create the Makefile in the ROOT of the source
-  cat << 'EOF' > Makefile
-obj-m += aic8800_fdrv.o
-aic8800_fdrv-y := \
-	aic8800_fdrv_main.o \
-	aic_bsp_main.o \
-	aic_bsp_pwrctl.o \
-	aic_bsp_fw.o \
-	aic_bsp_sdiow3.o \
-	aic_bsp_txrx.o \
-	aic_bsp_driver.o \
-	rwnx_main.o \
-	rwnx_msg_tx.o \
-	rwnx_msg_rx.o \
-	rwnx_utils.o \
-	rwnx_v7.o \
-	rwnx_txq.o \
-	rwnx_tx.o \
-	rwnx_config.o \
-	rwnx_maclist.o \
-	rwnx_vendor.o
-
-ccflags-y += -I$(src)
-ccflags-y += -DCONFIG_AIC8800_WLAN_SUPPORT -DCONFIG_RWNX_FULLMAC
-ccflags-y += -DCONFIG_AIC_FW_PATH=\"/usr/lib/firmware/aic8800\"
-ccflags-y += -Wno-implicit-fallthrough -Wno-int-conversion -Wno-incompatible-pointer-types
-EOF
-}
-
 package() {
   cd "$srcdir/aic8800-cachyos-6.18"
 
   # 1. Firmware
-  install -dm755 "$pkgdir/usr/lib/firmware/aic8800"
-  install -m644 fw/aic8800DC/*.bin "$pkgdir/usr/lib/firmware/aic8800/"
+  install -dm755 "$pkgdir/usr/lib/firmware/aic8800DC"
+  install -m644 fw/aic8800DC/*.bin "$pkgdir/usr/lib/firmware/aic8800DC/"
 
-  # 2. DKMS Source - Flat Structure
+  # 2. DKMS Source
   local _fullver=$(pkgver)
   local _destdir="$pkgdir/usr/src/aic8800-cachyos-$_fullver"
   install -dm755 "$_destdir"
-  
-  # Copy all the .c and .h files we flattened in prepare()
-  cp *.[ch] "$_destdir/"
-  cp Makefile "$_destdir/"
+  cp -a . "$_destdir/"
+  rm -rf "$_destdir/.git"
 
   # 3. DKMS Config
-  cat << EOF > "$_destdir/dkms.conf"
-PACKAGE_NAME="aic8800-cachyos"
-PACKAGE_VERSION="$_fullver"
-BUILT_MODULE_NAME[0]="aic8800_fdrv"
-DEST_MODULE_LOCATION[0]="/kernel/drivers/net/wireless/"
-AUTOINSTALL="yes"
-EOF
+  install -m644 dkms.conf "$_destdir/dkms.conf"
 
   # 4. Udev rules
   install -Dm644 aic8800.rules "$pkgdir/usr/lib/udev/rules.d/aic8800.rules"
+  install -Dm644 aic.rules "$pkgdir/usr/lib/udev/rules.d/aic.rules"
 }
