@@ -1,0 +1,1 @@
+savedcmd_/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/modules.order := {   echo /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aic_load_fw.o; :; } > /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/modules.order

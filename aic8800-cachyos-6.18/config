@@ -1,0 +1,9 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "origin"]
+	url = https://github.com/infinityabundance/aic8800-cachyos-6.18.git
+	tagOpt = --no-tags
+	fetch = +refs/*:refs/*
+	mirror = true

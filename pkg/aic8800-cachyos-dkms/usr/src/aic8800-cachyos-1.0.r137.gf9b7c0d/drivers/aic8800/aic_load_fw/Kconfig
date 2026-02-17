@@ -1,0 +1,39 @@
+config AIC_LOADFW_SUPPORT
+	tristate "AIC8800 Firmware Loader Support"
+	depends on AIC_WLAN_SUPPORT
+	default m
+	help
+	  This option enables the firmware loading module required for 
+	  AIC8800 Wi-Fi and Bluetooth initialization.
+
+	  enables the command management and firmware loading 
+	  logic defined in aicbluetooth_cmds.h/c.
+
+	  enables the firmware loading module and the 
+	  AICWFDBG diagnostic logging system.
+
+	  enables the firmware loader and the high-performance 
+	  RX pre-allocation memory system.
+
+	  enables the firmware loading module. 
+	  It includes high-performance RX buffer pre-allocation 
+	  defined in aicwf_rx_prealloc.h.
+
+	  firmware loader with TX/RX pre-allocation 
+	  optimizations for better performance on Linux.
+
+	  firmware loader with TX queue pre-allocation 
+	  optimizations (aicwf_txq_prealloc.h).
+
+	  USB-based firmware loader for AIC8800.
+	  It handles device enumeration and power management.
+
+	  USB-based firmware loader. 
+	  It relies on the structures defined in aicwf_usb.h to 
+	  manage communication with the hardware.
+
+	  enables the firmware loader, including MD5-based 
+	  integrity checking for firmware binaries.
+
+	  If you are building this for CachyOS or standard Linux, say M here.
+	  This will create the 'aic_load_fw.ko' module.

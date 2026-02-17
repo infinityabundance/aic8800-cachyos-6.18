@@ -10,6 +10,11 @@ CONFIG_RWNX_FULLMAC = y
 CONFIG_ROM_PATCH_EN = y
 CONFIG_USE_5G = y
 CONFIG_BR_SUPPORT = y
+CONFIG_RWNX_MUMIMO_TX = n
+CONFIG_RWNX_RADAR = n
+CONFIG_RWNX_DEBUGFS = y
+CONFIG_RWNX_TESTMODE = n
+CONFIG_FILTER_TCP_ACK = y
 
 
 # --- DEBUG TOGGLE ---
@@ -26,7 +31,7 @@ CONFIG_BR_SUPPORT = y
 
 # Set the correct firmware path for CachyOS
 ccflags-y += -DCONFIG_AIC_FW_PATH=\"/usr/lib/firmware\"
-ccflags-y += -DAICWF_USB_SUPPORT
+ccflags-y += -DAICWF_USB_SUPPORT -DCONFIG_RWNX_FULLMAC -DFULLMAC
 
 # Compiler Warnings Suppression
 ccflags-y += -Wno-implicit-fallthrough -Wno-attribute-warning -Wno-unused-function
@@ -40,47 +45,63 @@ $(MODULE_NAME)-y := \
   rwnx_fw_dump.o \
   rwnx_fw_trace.o \
   rwnx_mod_params.o \
-  rwnx_mu_group.o \
   rwnx_msg_tx.o \
   rwnx_msg_rx.o \
   rwnx_platform.o \
-  rwnx_radar.o \
   rwnx_rx.o \
   rwnx_strs.o \
   rwnx_tdls.o \
-  rwnx_testmode.o \
   rwnx_tx.o \
   rwnx_txq.o \
   rwnx_utils.o \
   rwnx_v7.o \
   rwnx_gki.o \
   rwnx_dini.o \
-  rwnx_events.o \
   rwnx_irqs.o \
   rwnx_mesh.o \
-  rwnx_bfmer.o \
+  rwnx_pci.o \
   aic_vendor.o \
   aicwf_compat_8800d80.o \
   aicwf_compat_8800dc.o \
   aicwf_tcp_ack.o \
   aicwf_txrxif.o \
   aicwf_usb.o \
-  aicwf_wext_linux.o \
+  ipc_host.o \
+  md5.o \
+  regdb.o \
   usb_host.o
 
-# 1. Bridge Support (NAT25 logic)
-ifeq ($(CONFIG_BR_SUPPORT), y)
-  ccflags-y += -DCONFIG_BR_SUPPORT
-  $(MODULE_NAME)-y += aic_br_ext.o
+ifeq ($(CONFIG_RWNX_MUMIMO_TX), y)
+  ccflags-y += -DCONFIG_RWNX_MUMIMO_TX -DCONFIG_RWNX_BFMER
+  $(MODULE_NAME)-y += rwnx_mu_group.o
+endif
+
+ifeq ($(CONFIG_RWNX_RADAR), y)
+  ccflags-y += -DCONFIG_RWNX_RADAR
+  $(MODULE_NAME)-y += rwnx_radar.o
+endif
+
+ifeq ($(CONFIG_RWNX_DEBUGFS), y)
+  ccflags-y += -DCONFIG_RWNX_DEBUGFS
+endif
+
+ifeq ($(CONFIG_RWNX_TESTMODE), y)
+  ccflags-y += -DCONFIG_RWNX_TESTMODE
+  $(MODULE_NAME)-y += rwnx_testmode.o
+endif
+
+# 1. TCP ACK Filtering (Performance optimization)
+ifeq ($(CONFIG_FILTER_TCP_ACK), y)
+  ccflags-y += -DCONFIG_FILTER_TCP_ACK
 endif
 
 # 2. RX Prealloc Support (Performance/Memory management)
-# We enable this by default for CachyOS performance
-CONFIG_PREALLOC_RX_SKB = y
-ifeq ($(CONFIG_PREALLOC_RX_SKB), y)
-  ccflags-y += -DCONFIG_PREALLOC_RX_SKB
-  $(MODULE_NAME)-y += aicwf_rx_prealloc.o
-endif
+# Disabled for CachyOS - causes build errors due to module boundary issues
+# CONFIG_PREALLOC_RX_SKB = y
+# ifeq ($(CONFIG_PREALLOC_RX_SKB), y)
+#   ccflags-y += -DCONFIG_PREALLOC_RX_SKB
+#   $(MODULE_NAME)-y += aicwf_rx_prealloc.o
+# endif
 
 # Search paths for headers
 ccflags-y += -I$(src) -I$(src)/../aic_load_fw

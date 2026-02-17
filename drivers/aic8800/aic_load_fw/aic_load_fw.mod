@@ -1,0 +1,9 @@
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aic_bluetooth_main.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aicbluetooth.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aicbluetooth_cmds.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aicwf_usb.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aic_txrxif.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aic_compat_8800d80.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/md5.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aicwf_rx_prealloc.o
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic_load_fw/aicwf_txq_prealloc.o

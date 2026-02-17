@@ -14,6 +14,7 @@
 
 #include "lmac_msg.h"
 #include "aicwf_debug.h"
+#include "rwnx_config.h"
 
 #if 0
 #ifdef ANDROID_PLATFORM 

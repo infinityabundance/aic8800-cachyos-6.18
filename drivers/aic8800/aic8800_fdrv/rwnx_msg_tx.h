@@ -177,6 +177,9 @@ int rwnx_send_txpwr_lvl_v3_req(struct rwnx_hw *rwnx_hw);
 
 #ifdef CONFIG_USB_BT
 int rwnx_send_reboot(struct rwnx_hw *rwnx_hw);
+#else
+// Stub when USB BT support is disabled
+static inline int rwnx_send_reboot(struct rwnx_hw *rwnx_hw) { return 0; }
 #endif // CONFIG_USB_BT
 
 

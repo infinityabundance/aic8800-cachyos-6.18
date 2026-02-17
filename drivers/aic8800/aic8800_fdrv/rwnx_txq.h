@@ -16,6 +16,8 @@
 
 #include <net/mac80211.h>
 
+#include "rwnx_config.h"
+
 #ifdef CONFIG_RWNX_FULLMAC
 /**
  * Fullmac TXQ configuration:

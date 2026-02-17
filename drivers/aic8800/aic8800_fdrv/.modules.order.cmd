@@ -1,0 +1,1 @@
+savedcmd_/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/modules.order := {   echo /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.o; :; } > /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/modules.order

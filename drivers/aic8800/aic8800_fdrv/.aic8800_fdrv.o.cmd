@@ -1,0 +1,3 @@
+savedcmd_/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.o := ld -m elf_x86_64 -z noexecstack --no-warn-rwx-segments   -r -o /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.o @/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.mod  ; ./tools/objtool/objtool --hacks=jump_label --hacks=noinstr --hacks=skylake --ibt --orc --retpoline --rethunk --sls --static-call --uaccess --prefix=16  --link  --module /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.o
+
+/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/aic8800_fdrv/aic8800_fdrv.o: $(wildcard ./tools/objtool/objtool)

@@ -1,6 +1,6 @@
 # Maintainer: infinityabundance
 pkgname=aic8800-cachyos-dkms
-pkgver=1.0.r132.g213d94c
+pkgver=1.0.r137.gf9b7c0d
 pkgrel=1
 pkgdesc="AIC8800DC/DW DKMS driver for CachyOS"
 arch=('x86_64')

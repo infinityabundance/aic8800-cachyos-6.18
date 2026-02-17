@@ -188,6 +188,8 @@ union rwnx_pol_mac_ctrl_info_2 {
     u32 value;
 };
 
+#include "rwnx_config.h"
+
 #define POLICY_TABLE_PATTERN    0xBADCAB1E
 
 struct tx_policy_tbl {

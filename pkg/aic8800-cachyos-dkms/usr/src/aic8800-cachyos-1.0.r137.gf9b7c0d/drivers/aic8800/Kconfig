@@ -1,0 +1,12 @@
+config AIC_WLAN_SUPPORT
+	bool "AIC wireless Support"
+	default y
+	help
+	  This provides support for AIC8800 series wireless chips.
+	  Selecting this will allow you to configure the loader and the FullMAC driver.
+
+if AIC_WLAN_SUPPORT
+# Use relative paths so it works from the root of your cloned repository
+source "aic8800_fdrv/Kconfig"
+source "aic_load_fw/Kconfig"
+endif

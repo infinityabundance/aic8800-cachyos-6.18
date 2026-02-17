@@ -566,3 +566,17 @@ int rwnx_dbgfs_register_fw_dump(struct rwnx_hw *rwnx_hw,
   err:
     return -1;
 }
+
+// Stub function implementations for debugfs helpers
+void rwnx_dbgfs_trigger_fw_dump(struct rwnx_hw *rwnx_hw, const char *msg)
+{
+    // This function triggers a firmware dump - stub implementation
+    // In full implementations, this would queue an async task
+}
+
+void rwnx_umh_done(struct rwnx_hw *rwnx_hw)
+{
+    // This function signals usermode helper completion - stub implementation
+    // In full implementations, this would update UMH state tracking
+}
+

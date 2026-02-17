@@ -1,0 +1,1 @@
+savedcmd_/home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/Module.symvers :=  scripts/mod/modpost -M  -a    -N  -o /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/Module.symvers -n -T /home/one/aic8800-cachyos-6.18/aic8800-cachyos-6.18/drivers/aic8800/modules.order -i Module.symvers -e 

@@ -31,6 +31,29 @@
 #define USB_PRODUCT_ID_TENDA_U2             0x0014
 #endif
 
+// Define missing product IDs for devices not supporting CONFIG_USB_BT
+#ifndef USB_PRODUCT_ID_AIC8801
+#define USB_PRODUCT_ID_AIC8801				0x8801
+#endif
+#ifndef USB_PRODUCT_ID_AIC8800DC
+#define USB_PRODUCT_ID_AIC8800DC			0x88dc
+#endif
+#ifndef USB_PRODUCT_ID_AIC8800DW
+#define USB_PRODUCT_ID_AIC8800DW            0x88dd
+#endif
+#ifndef USB_PRODUCT_ID_AIC8800D81
+#define USB_PRODUCT_ID_AIC8800D81           0x8d81
+#endif
+#ifndef USB_PRODUCT_ID_AIC8800FC
+#define USB_PRODUCT_ID_AIC8800FC            0x88df
+#endif
+#ifndef USB_PRODUCT_ID_TENDA
+#define USB_PRODUCT_ID_TENDA                0x0013
+#endif
+#ifndef USB_PRODUCT_ID_TENDA_U2
+#define USB_PRODUCT_ID_TENDA_U2             0x0014
+#endif
+
 enum AICWF_IC{
 	PRODUCT_ID_AIC8801	=	0,
 	PRODUCT_ID_AIC8800DC,
