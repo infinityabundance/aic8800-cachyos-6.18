@@ -2,6 +2,7 @@
 
 RWNX_VERS_NUM := 6.4.3.0
 MODULE_NAME = aic8800_fdrv
+obj-m += aic8800_fdrv.o
 
 # Feature Toggles
 CONFIG_AIC8800_WLAN_SUPPORT = m
