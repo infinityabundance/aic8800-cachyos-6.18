@@ -118,6 +118,29 @@ Most modern distributions will then handle the switch automatically using udev r
 ## 🔍 Troubleshooting & USB Mode Switch
 
 Many AIC8800 devices initially mount as a Virtual CD-ROM (Storage Mode) to provide Windows drivers. Linux will not see the Wi-Fi card until the device is "switched."
+
+### Manual Mode Switch (SCSI Command)
+If your device stays in storage mode and does not switch automatically, you can force the switch using the following command:
+
+```
+sudo sg_raw -v /dev/sdc 1b 00 00 00 01 00
+```
+
+Replace `/dev/sdc` with your actual device node (check with `lsblk`).
+This command sends a SCSI Start Stop Unit to the device, triggering the mode switch to WiFi mode (`a69c:88dc`).
+
+After running this command, check with `lsusb` to confirm the device now shows as `AIC8800DC` (WiFi mode).
+
+You can then load the driver:
+```
+sudo modprobe aic8800_fdrv
+```
+
+And check for the WiFi interface:
+```
+ip link
+iw dev
+```
 1. Identify the Mode
 
 Check your Device ID by running:
@@ -265,4 +288,28 @@ CONFIG_AIC8800_SDIO_SUPPORT: Enable only for integrated SDIO chips (Default: n f
 ## 📜 License
 
 This project is licensed under the GPL-2.0 License—consistent with the Linux Kernel module requirements.
+
+---
+## ⚠️ USB Mode Switch (Manual Required)
+
+Many AIC8800 USB devices initially appear as a Virtual CD-ROM (storage mode) and must be switched to WiFi mode before the driver will load.
+
+**Manual Mode Switch:**
+
+If your device shows up as `a69c:5721` (Aic MSC) in `lsusb`, you must manually force a USB bus reset to switch it to WiFi mode:
+
+1. Unplug and replug the device, or
+2. Run the following script as root (replace `1-6.4.3` with your device's path if different):
+
+```sh
+echo '1-6.4.3' | sudo tee /sys/bus/usb/drivers/usb/unbind
+sleep 2
+echo '1-6.4.3' | sudo tee /sys/bus/usb/drivers/usb/bind
+```
+
+After this, the device should reappear as `a69c:88dc` (AIC8800DC) in `lsusb` and the driver will load.
+
+**Note:**
+- Do not use automatic scripts or udev rules for mode switching. Manual intervention is required and recommended for reliability.
+- If you have issues, check `lsusb` and `dmesg` for device status.
 
